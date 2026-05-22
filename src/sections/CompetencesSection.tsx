@@ -69,8 +69,8 @@ const CompetenceRow: FC<{ competence: Competence; index: number }> = ({ competen
 
           <p className="text-zinc-500 text-sm leading-relaxed mb-3 line-clamp-2">{competence.description}</p>
 
-          {/* Savoir-faire preview (3 premiers) */}
-          <div className="flex flex-wrap gap-2">
+          {/* Savoir-faire preview (3 premiers) — masqué sur mobile */}
+          <div className="hidden sm:flex flex-wrap gap-2">
             {competence.savoirFaire.slice(0, 3).map((sf, i) => (
               <span key={i} className="text-xs text-zinc-500 border border-white/8 rounded-full px-2.5 py-0.5">
                 {sf.length > 40 ? sf.substring(0, 40) + '…' : sf}
@@ -104,7 +104,7 @@ const CompetenceRow: FC<{ competence: Competence; index: number }> = ({ competen
             transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] }}
             className="overflow-hidden"
           >
-            <div className="pb-8 pl-14 sm:pl-[3.25rem] grid sm:grid-cols-2 gap-8">
+            <div className="pb-8 pl-0 sm:pl-14 grid sm:grid-cols-2 gap-8">
 
               {/* Colonne 1 — Savoir-faire + Projets */}
               <div className="space-y-6">

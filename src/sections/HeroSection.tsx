@@ -24,17 +24,17 @@ const HeroSection: FC = () => {
 
         {/* Bandeau supérieur */}
         <motion.div
-          className="flex items-center justify-between mb-12 sm:mb-20"
+          className="flex flex-wrap items-center justify-between gap-3 mb-12 sm:mb-20"
           initial={{ opacity: 0, y: -12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.1 }}
         >
           <div className="flex items-center gap-2 text-xs text-zinc-500 font-medium tracking-widest uppercase">
-            <div className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+            <div className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse shrink-0" />
             Disponible — Stage juin 2026
           </div>
           <div className="flex items-center gap-1.5 text-xs text-zinc-600">
-            <MapPin size={11} />
+            <MapPin size={11} className="shrink-0" />
             Valenciennes, France
           </div>
         </motion.div>
@@ -103,7 +103,7 @@ const HeroSection: FC = () => {
           transition={{ duration: 0.6, delay: 0.8 }}
         >
           {/* Tags compétences */}
-          <div className="flex flex-wrap gap-2">
+          <div className="flex flex-wrap gap-2 min-w-0">
             {['Marketing', 'Vente', 'Communication', 'Business Dev', 'Relation Client'].map((c) => (
               <span
                 key={c}

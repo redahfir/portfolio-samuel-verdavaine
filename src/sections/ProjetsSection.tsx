@@ -23,7 +23,7 @@ const ProjetModal: FC<{ projet: Projet; onClose: () => void }> = ({ projet, onCl
 
   return (
     <motion.div
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-8"
+      className="fixed inset-0 z-50 flex items-end sm:items-center justify-center sm:p-8"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
@@ -31,7 +31,7 @@ const ProjetModal: FC<{ projet: Projet; onClose: () => void }> = ({ projet, onCl
       <div className="absolute inset-0 bg-black/85 backdrop-blur-xl" onClick={onClose} />
 
       <motion.div
-        className="relative w-full max-w-3xl max-h-[92vh] overflow-y-auto bg-[#0d0d18] border border-white/10 rounded-2xl shadow-2xl"
+        className="relative w-full max-w-3xl max-h-[92vh] sm:max-h-[92vh] overflow-y-auto bg-[#0d0d18] border border-white/10 rounded-t-2xl sm:rounded-2xl shadow-2xl"
         initial={{ y: 24, opacity: 0, scale: 0.98 }}
         animate={{ y: 0, opacity: 1, scale: 1 }}
         exit={{ y: 24, opacity: 0, scale: 0.98 }}
@@ -185,11 +185,11 @@ const ProjetRow: FC<{ projet: Projet; index: number; onClick: () => void }> = ({
             <span className="text-xs text-zinc-600">{projet.categorie}</span>
           </div>
 
-          <h3 className="font-display text-white font-semibold text-lg sm:text-xl leading-tight mb-2 group-hover:text-blue-100 transition-colors">
+          <h3 className="font-display text-white font-semibold text-base sm:text-xl leading-tight mb-2 group-hover:text-blue-100 transition-colors">
             {projet.titre}
           </h3>
 
-          <p className="text-zinc-500 text-sm leading-relaxed line-clamp-2 mb-3">{projet.description}</p>
+          <p className="text-zinc-500 text-sm leading-relaxed line-clamp-1 sm:line-clamp-2 mb-3">{projet.description}</p>
 
           {/* Compétences chips */}
           <div className="flex flex-wrap gap-1.5">
@@ -255,7 +255,7 @@ const ProjetsSection: FC = () => {
           </div>
 
           {/* Filtres */}
-          <div className="flex items-center gap-2 bg-white/4 border border-white/8 rounded-full p-1">
+          <div className="flex items-center gap-2 bg-white/4 border border-white/8 rounded-full p-1 shrink-0 overflow-x-auto">
             {filters.map(f => (
               <button
                 key={f.id}

@@ -15,7 +15,7 @@ const ContactSection: FC = () => {
       <div className="absolute inset-0 bg-hero-gradient opacity-50 pointer-events-none" />
       <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-96 h-96 bg-blue-500/8 rounded-full blur-3xl pointer-events-none" />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 relative z-10">
         <div className="mb-14 flex justify-center">
           <SectionTitle
             tag="Prise de contact"

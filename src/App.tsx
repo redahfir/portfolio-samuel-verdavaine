@@ -5,7 +5,7 @@ import Home from './pages/Home';
 
 const App: FC = () => {
   return (
-    <div className="min-h-screen bg-dark-900 text-white">
+    <div className="min-h-screen bg-[#07070f] text-white">
       <Header />
       <Home />
       <Footer />

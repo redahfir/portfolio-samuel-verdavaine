@@ -195,7 +195,7 @@ const ReflexifSection: FC = () => {
     <section id="reflexif" className="py-24 bg-dark-700 relative overflow-hidden">
       <div className="absolute top-0 left-0 w-72 h-72 bg-purple-500/5 rounded-full blur-3xl pointer-events-none" />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16">
         <div className="mb-14 flex justify-center">
           <SectionTitle
             tag="Démarche réflexive"

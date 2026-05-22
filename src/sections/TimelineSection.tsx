@@ -115,7 +115,7 @@ const TimelineSection: FC = () => {
     <section id="timeline" className="py-24 bg-dark-700 relative overflow-hidden">
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-px h-full bg-gradient-to-b from-transparent via-white/6 to-transparent pointer-events-none hidden lg:block" />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16">
         <div className="mb-14 flex justify-center">
           <SectionTitle
             tag="Parcours académique"
@@ -151,7 +151,7 @@ const TimelineSection: FC = () => {
               </motion.div>
 
               {/* Projets grid */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 ml-0 sm:ml-18">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:ml-16">
                 {annee.projets.map((projet, projetIndex) => {
                   const Icon = iconMap[projet.icone] || BarChart3;
                   const isLeft = (anneeIndex + projetIndex) % 2 === 0;
