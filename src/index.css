@@ -183,10 +183,10 @@ html[data-theme="light"] .text-blue-400     { color: #1d4ed8 !important; } /* 5.
 html[data-theme="light"] .text-blue-300     { color: #2563eb !important; } /* 4.7:1 */
 html[data-theme="light"] .text-blue-500     { color: #1e40af !important; } /* 6.0:1 */
 html[data-theme="light"] .text-emerald-400  { color: #047857 !important; } /* 5.0:1 */
-html[data-theme="light"] .text-emerald-300  { color: #059669 !important; } /* 3.9:1 — decoratif */
+html[data-theme="light"] .text-emerald-300  { color: #047857 !important; } /* 5.0:1 */
 html[data-theme="light"] .text-cyan-400     { color: #0369a1 !important; } /* 5.9:1 */
 html[data-theme="light"] .text-amber-400    { color: #92400e !important; } /* 4.7:1 */
-html[data-theme="light"] .text-amber-300    { color: #b45309 !important; } /* 3.3:1 — decoratif */
+html[data-theme="light"] .text-amber-300    { color: #92400e !important; } /* 4.7:1 */
 html[data-theme="light"] .text-violet-400   { color: #6d28d9 !important; } /* 5.8:1 */
 
 /* ── Backgrounds — opacités blanches → noires ─────────────── */
@@ -295,3 +295,32 @@ html[data-theme="light"] [class*="nav-indicator"] {
   background-color: rgba(0,0,0,0.05) !important;
   border-color: rgba(0,0,0,0.09) !important;
 }
+
+/* ── gradient-text — couleurs profondes en mode clair ─────── */
+html[data-theme="light"] .gradient-text {
+  background: linear-gradient(135deg, #1d4ed8 0%, #0369a1 60%, #047857 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* ── Variants d'opacité texte non couverts ─────────────────── */
+/* Ces classes Tailwind (ex: text-blue-400/70) génèrent rgba() */
+/* et ne sont pas capturées par les overrides sans opacité.    */
+html[data-theme="light"] .text-blue-400\/70    { color: rgba(29,78,216,0.90)   !important; }
+html[data-theme="light"] .text-blue-400\/60    { color: rgba(29,78,216,0.85)   !important; }
+html[data-theme="light"] .text-blue-400\/80    { color: rgba(29,78,216,0.92)   !important; }
+html[data-theme="light"] .text-blue-500\/70    { color: rgba(30,64,175,0.90)   !important; }
+html[data-theme="light"] .text-blue-500\/40    { color: rgba(30,64,175,0.70)   !important; }
+html[data-theme="light"] .text-emerald-400\/70 { color: rgba(4,120,87,0.90)    !important; }
+html[data-theme="light"] .text-emerald-400\/60 { color: rgba(4,120,87,0.85)    !important; }
+html[data-theme="light"] .text-amber-400\/70   { color: rgba(146,64,14,0.90)   !important; }
+html[data-theme="light"] .text-amber-400\/60   { color: rgba(146,64,14,0.85)   !important; }
+html[data-theme="light"] .text-zinc-400\/70    { color: rgba(75,85,99,0.90)    !important; }
+html[data-theme="light"] .text-zinc-500\/70    { color: rgba(107,114,128,0.90) !important; }
+
+/* ── Hover et group-hover couleurs non couverts ────────────── */
+html[data-theme="light"] .hover\:text-blue-300:hover  { color: #2563eb !important; }
+html[data-theme="light"] .hover\:text-blue-400:hover  { color: #1d4ed8 !important; }
+html[data-theme="light"] .group:hover .group-hover\:text-blue-400   { color: #1d4ed8 !important; }
+html[data-theme="light"] .group:hover .group-hover\:text-emerald-400 { color: #047857 !important; }
