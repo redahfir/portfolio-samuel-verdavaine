@@ -8,10 +8,14 @@ export type ButAnnee = 'BUT1' | 'BUT2' | 'BUT3';
 
 export type NiveauProgression = 1 | 2 | 3;
 
+// Niveau de maîtrise concret — pas de pourcentage
+export type NiveauMaitrise = 'en-acquisition' | 'acquis' | 'maitrise';
+
 // --- Compétence BUT ---
 export interface ApprentissageCritique {
   id: string;
   libelle: string;
+  maitrise: NiveauMaitrise;
 }
 
 export interface ComposanteEssentielle {
@@ -24,23 +28,25 @@ export interface Competence {
   titre: string;
   niveauIntitule: string;
   niveau: NiveauProgression;
-  couleur: string;         // Classe Tailwind couleur principale
-  couleurAccent: string;   // Hex ou classe pour l'accent visuel
-  icone: string;           // Nom d'icône Lucide React
+  couleur: string;
+  couleurAccent: string;
+  icone: string;
   objectif: string;
   description: string;
+  // Ce que je sais faire concrètement
+  savoirFaire: string[];
   apprentissagesCritiques: ApprentissageCritique[];
   composantesEssentielles: ComposanteEssentielle[];
-  projetsAssocies: string[]; // IDs des projets liés
-  progression: number;       // 0-100
+  projetsAssocies: string[];
+  maitrise: NiveauMaitrise;
 }
 
 // --- Projet / SAÉ ---
 export interface Preuve {
   type: 'document' | 'presentation' | 'affiche' | 'analyse' | 'capture' | 'tableau' | 'autre';
-  libelle: string;   // Descriptif de la preuve attendue
-  fournie: boolean;  // false = placeholder à compléter
-  url?: string;      // Lien si disponible
+  libelle: string;
+  fournie: boolean;
+  url?: string;
 }
 
 export interface Projet {
@@ -103,7 +109,7 @@ export interface Stage {
   preuves: Preuve[];
   bilan: string;
   analyseReflexive: string;
-  fourni: boolean; // false = section à compléter
+  fourni: boolean;
 }
 
 // --- Navigation ---

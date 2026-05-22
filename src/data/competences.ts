@@ -1,6 +1,6 @@
 // ============================================================
-// Données compétences BUT TC — Parcours P3 (Business Dev & RC)
-// Source : Référentiel TC_BUT~Parcours 3 + Cartes identités P3_N2
+// Données compétences BUT TC — Parcours P3
+// Niveau de maîtrise : concret, sans pourcentage
 // ============================================================
 import type { Competence } from '../types';
 
@@ -13,16 +13,23 @@ export const competences: Competence[] = [
     couleur: 'brand-blue',
     couleurAccent: '#3b82f6',
     icone: 'TrendingUp',
-    objectif:
-      'Construire une solution client étendue à tous les secteurs d\'activités, en intégrant les évolutions du marché, les enjeux RSE et les tendances marketing avancées.',
-    description:
-      'À ce niveau, il ne s\'agit plus seulement de comprendre le marché, mais d\'être capable de concevoir et faire évoluer une offre globale en tenant compte des mutations sectorielles, des comportements clients et des impératifs de durabilité.',
+    maitrise: 'maitrise',
+    objectif: 'Construire une solution client étendue à tous les secteurs d\'activités.',
+    description: 'Capacité à analyser un marché, formuler des recommandations stratégiques et faire évoluer une offre en intégrant la RSE et les tendances sectorielles.',
+    savoirFaire: [
+      'Réaliser une analyse PESTEL et SWOT complète',
+      'Identifier les opportunités et menaces d\'un marché',
+      'Construire une proposition de valeur différenciante',
+      'Conduire une veille concurrentielle structurée',
+      'Intégrer les enjeux RSE dans une stratégie marketing',
+      'Formuler des recommandations opérationnelles argumentées',
+    ],
     apprentissagesCritiques: [
-      { id: 'ac-mkt-1', libelle: 'Analyser et surveiller l\'environnement commercial et concurrentiel' },
-      { id: 'ac-mkt-2', libelle: 'Faire évoluer une offre en intégrant les nouvelles tendances marché' },
-      { id: 'ac-mkt-3', libelle: 'Intégrer les dimensions RSE et développement durable dans la stratégie marketing' },
-      { id: 'ac-mkt-4', libelle: 'Construire une proposition de valeur différenciante' },
-      { id: 'ac-mkt-5', libelle: 'Conduire une veille stratégique et concurrentielle' },
+      { id: 'ac-mkt-1', libelle: 'Analyser et surveiller l\'environnement commercial et concurrentiel', maitrise: 'maitrise' },
+      { id: 'ac-mkt-2', libelle: 'Faire évoluer une offre en intégrant les nouvelles tendances marché', maitrise: 'acquis' },
+      { id: 'ac-mkt-3', libelle: 'Intégrer les dimensions RSE dans la stratégie marketing', maitrise: 'acquis' },
+      { id: 'ac-mkt-4', libelle: 'Construire une proposition de valeur différenciante', maitrise: 'maitrise' },
+      { id: 'ac-mkt-5', libelle: 'Conduire une veille stratégique et concurrentielle', maitrise: 'maitrise' },
     ],
     composantesEssentielles: [
       { id: 'ce-mkt-1', libelle: 'Comprendre les enjeux du marché et des acteurs sectoriels' },
@@ -31,7 +38,6 @@ export const competences: Competence[] = [
       { id: 'ce-mkt-4', libelle: 'Créer de la valeur à travers une offre pertinente et différenciante' },
     ],
     projetsAssocies: ['sae-marketing-b1', 'sae-omnicanalite-b3'],
-    progression: 78,
   },
 
   {
@@ -42,16 +48,23 @@ export const competences: Competence[] = [
     couleur: 'brand-emerald',
     couleurAccent: '#10b981',
     icone: 'Handshake',
-    objectif:
-      'Préparer et conduire des ventes complexes en maîtrisant les techniques d\'achat, les outils commerciaux avancés, la négociation et l\'argumentation face à des interlocuteurs exigeants.',
-    description:
-      'La vente complexe exige de comprendre les enjeux côté acheteur, de construire un argumentaire solide et personnalisé, et de savoir gérer toutes les étapes d\'un cycle de vente avancé avec professionnalisme.',
+    maitrise: 'maitrise',
+    objectif: 'Préparer et conduire des ventes complexes face à des acheteurs professionnels.',
+    description: 'Maîtrise des techniques de vente avancée, de l\'argumentation structurée et de la négociation en contexte B2B.',
+    savoirFaire: [
+      'Préparer un entretien de vente avec une grille de découverte',
+      'Construire un argumentaire CAB personnalisé',
+      'Traiter les objections avec méthode et sang-froid',
+      'Comprendre les techniques d\'achat de l\'interlocuteur',
+      'Négocier les conditions sans sacrifier la marge',
+      'Conclure une vente en créant de la valeur des deux côtés',
+    ],
     apprentissagesCritiques: [
-      { id: 'ac-vte-1', libelle: 'Préparer et structurer une vente complexe' },
-      { id: 'ac-vte-2', libelle: 'Comprendre et intégrer les techniques d\'achat dans la démarche commerciale' },
-      { id: 'ac-vte-3', libelle: 'Construire des outils commerciaux adaptés au contexte' },
-      { id: 'ac-vte-4', libelle: 'Argumenter, traiter les objections et négocier efficacement' },
-      { id: 'ac-vte-5', libelle: 'Adapter son discours et sa posture selon l\'interlocuteur' },
+      { id: 'ac-vte-1', libelle: 'Préparer et structurer une vente complexe', maitrise: 'maitrise' },
+      { id: 'ac-vte-2', libelle: 'Comprendre et intégrer les techniques d\'achat dans la démarche', maitrise: 'acquis' },
+      { id: 'ac-vte-3', libelle: 'Construire des outils commerciaux adaptés au contexte', maitrise: 'maitrise' },
+      { id: 'ac-vte-4', libelle: 'Argumenter, traiter les objections et négocier efficacement', maitrise: 'maitrise' },
+      { id: 'ac-vte-5', libelle: 'Adapter son discours et sa posture selon l\'interlocuteur', maitrise: 'acquis' },
     ],
     composantesEssentielles: [
       { id: 'ce-vte-1', libelle: 'Maîtriser le processus commercial de bout en bout' },
@@ -60,7 +73,6 @@ export const competences: Competence[] = [
       { id: 'ce-vte-4', libelle: 'Conclure une vente en créant de la valeur pour toutes les parties' },
     ],
     projetsAssocies: ['entretien-nego-b3', 'sae-business-game-b1'],
-    progression: 82,
   },
 
   {
@@ -71,17 +83,24 @@ export const competences: Competence[] = [
     couleur: 'brand-purple',
     couleurAccent: '#8b5cf6',
     icone: 'Megaphone',
-    objectif:
-      'Construire et déployer un plan de communication 360° intégrant les outils digitaux, les réseaux sociaux, l\'e-réputation et les indicateurs de performance.',
-    description:
-      'À ce niveau, il s\'agit de passer de la simple réalisation de supports à la construction d\'une véritable stratégie de communication multicanale, cohérente, mesurable et orientée objectifs business.',
+    maitrise: 'acquis',
+    objectif: 'Construire et déployer un plan de communication 360° orienté objectifs.',
+    description: 'Capacité à concevoir une stratégie de communication multicanale cohérente, de la définition du message à la mesure des résultats.',
+    savoirFaire: [
+      'Réaliser un diagnostic de la communication d\'une organisation',
+      'Définir une cible, un message clé et une ligne éditoriale',
+      'Choisir les canaux adaptés à la cible et au budget',
+      'Créer des supports de communication visuels (affiche, réseaux sociaux)',
+      'Rédiger un plan de communication 360° argumenté',
+      'Mesurer la performance d\'une action de communication',
+    ],
     apprentissagesCritiques: [
-      { id: 'ac-com-1', libelle: 'Construire une stratégie de communication alignée avec les objectifs commerciaux' },
-      { id: 'ac-com-2', libelle: 'Sélectionner et exploiter les supports de communication adaptés' },
-      { id: 'ac-com-3', libelle: 'Proposer un plan de communication 360° cohérent' },
-      { id: 'ac-com-4', libelle: 'Intégrer les outils digitaux et les réseaux sociaux' },
-      { id: 'ac-com-5', libelle: 'Mesurer la performance des actions de communication' },
-      { id: 'ac-com-6', libelle: 'Gérer l\'e-réputation de l\'organisation' },
+      { id: 'ac-com-1', libelle: 'Construire une stratégie de communication alignée avec les objectifs', maitrise: 'acquis' },
+      { id: 'ac-com-2', libelle: 'Sélectionner et exploiter les supports de communication adaptés', maitrise: 'maitrise' },
+      { id: 'ac-com-3', libelle: 'Proposer un plan de communication 360° cohérent', maitrise: 'acquis' },
+      { id: 'ac-com-4', libelle: 'Intégrer les outils digitaux et les réseaux sociaux', maitrise: 'acquis' },
+      { id: 'ac-com-5', libelle: 'Mesurer la performance des actions de communication', maitrise: 'en-acquisition' },
+      { id: 'ac-com-6', libelle: 'Gérer l\'e-réputation de l\'organisation', maitrise: 'en-acquisition' },
     ],
     composantesEssentielles: [
       { id: 'ce-com-1', libelle: 'Définir une ligne éditoriale et une identité de communication' },
@@ -90,25 +109,31 @@ export const competences: Competence[] = [
       { id: 'ce-com-4', libelle: 'Mesurer et analyser les résultats des campagnes' },
     ],
     projetsAssocies: ['com-challenge-b1', 'sae-omnicanalite-b3'],
-    progression: 72,
   },
 
   {
     id: 'business-dev',
     titre: 'Business Développement',
-    niveauIntitule: 'Niveau 2 — Agir en tant que responsable de l\'équipe commerciale',
+    niveauIntitule: 'Niveau 2 — Agir en tant que responsable commercial',
     niveau: 2,
     couleur: 'brand-cyan',
     couleurAccent: '#06b6d4',
     icone: 'Rocket',
-    objectif:
-      'Mettre en œuvre la stratégie marketing et commerciale au sein d\'une équipe, fédérer les collaborateurs autour des objectifs et co-construire une offre avec les parties prenantes.',
-    description:
-      'Le business développement à ce niveau requiert de maîtriser la dimension managériale et stratégique : identifier les opportunités, piloter une équipe commerciale et construire des offres en lien avec le terrain et les partenaires.',
+    maitrise: 'acquis',
+    objectif: 'Mettre en œuvre une stratégie commerciale et fédérer une équipe autour des objectifs.',
+    description: 'Capacité à identifier des opportunités de développement, piloter une dynamique commerciale et co-construire une offre adaptée au contexte client.',
+    savoirFaire: [
+      'Identifier une opportunité de marché et la qualifier',
+      'Construire un Business Model Canvas viable',
+      'Rédiger un business plan (partie commerciale et marketing)',
+      'Définir et décliner une stratégie go-to-market',
+      'Animer une équipe autour d\'objectifs commerciaux',
+      'Co-construire une offre avec des partenaires ou clients',
+    ],
     apprentissagesCritiques: [
-      { id: 'ac-bd-1', libelle: 'Mettre en œuvre la stratégie marketing et commerciale au sein de l\'équipe' },
-      { id: 'ac-bd-2', libelle: 'Fédérer les équipes autour de la réussite des objectifs marketing et commerciaux' },
-      { id: 'ac-bd-3', libelle: 'Co-construire une offre en collaboration avec les parties prenantes internes et externes' },
+      { id: 'ac-bd-1', libelle: 'Mettre en œuvre la stratégie marketing et commerciale au sein de l\'équipe', maitrise: 'acquis' },
+      { id: 'ac-bd-2', libelle: 'Fédérer les équipes autour des objectifs marketing et commerciaux', maitrise: 'en-acquisition' },
+      { id: 'ac-bd-3', libelle: 'Co-construire une offre avec les parties prenantes internes et externes', maitrise: 'acquis' },
     ],
     composantesEssentielles: [
       { id: 'ce-bd-1', libelle: 'Identifier les opportunités de développement les plus porteuses' },
@@ -116,34 +141,39 @@ export const competences: Competence[] = [
       { id: 'ce-bd-3', libelle: 'Élaborer une offre adaptée au contexte sectoriel du client' },
     ],
     projetsAssocies: ['sae-entrepreneuriat-b2', 'sae-job-dating-b2'],
-    progression: 68,
   },
 
   {
     id: 'relation-client',
     titre: 'Relation Client',
-    niveauIntitule: 'Niveau 2 — Agir en tant que responsable de l\'équipe relation client',
+    niveauIntitule: 'Niveau 2 — Agir en tant que responsable relation client',
     niveau: 2,
     couleur: 'brand-amber',
     couleurAccent: '#f59e0b',
     icone: 'Heart',
-    objectif:
-      'Manager la relation client en assurant la cohérence globale de l\'organisation, en optimisant l\'expérience client et en diffusant une culture client au sein de l\'équipe.',
-    description:
-      'À ce niveau, la relation client dépasse le simple contact avec le client : elle implique de piloter la satisfaction, de valoriser le portefeuille client via les données et de mettre en place une dynamique d\'amélioration continue.',
+    maitrise: 'acquis',
+    objectif: 'Manager la relation client et piloter l\'expérience client dans sa globalité.',
+    description: 'Capacité à cartographier le parcours client, identifier les points de friction et mettre en place des actions d\'amélioration continue de l\'expérience.',
+    savoirFaire: [
+      'Cartographier un parcours client (Customer Journey Map)',
+      'Identifier les points de friction et les moments de vérité',
+      'Proposer des axes d\'amélioration de l\'expérience client',
+      'Utiliser les outils CRM pour suivre et valoriser le portefeuille',
+      'Construire un plan d\'action relation client opérationnel',
+      'Diffuser une culture client au sein d\'une équipe',
+    ],
     apprentissagesCritiques: [
-      { id: 'ac-rc-1', libelle: 'Asseoir la réussite de la relation client sur la cohérence globale de l\'organisation : outils, processus, communication, structure organisationnelle' },
-      { id: 'ac-rc-2', libelle: 'Optimiser l\'expérience client grâce à un processus d\'amélioration continue' },
-      { id: 'ac-rc-3', libelle: 'Contribuer à la diffusion de la culture client au sein de l\'organisation' },
-      { id: 'ac-rc-4', libelle: 'Faire évoluer les outils de la relation client' },
+      { id: 'ac-rc-1', libelle: 'Assurer la cohérence globale de l\'organisation autour du client', maitrise: 'acquis' },
+      { id: 'ac-rc-2', libelle: 'Optimiser l\'expérience client via un processus d\'amélioration continue', maitrise: 'acquis' },
+      { id: 'ac-rc-3', libelle: 'Contribuer à la diffusion de la culture client dans l\'organisation', maitrise: 'en-acquisition' },
+      { id: 'ac-rc-4', libelle: 'Faire évoluer les outils de la relation client', maitrise: 'en-acquisition' },
     ],
     composantesEssentielles: [
       { id: 'ce-rc-1', libelle: 'Développer une culture partagée du service client' },
-      { id: 'ce-rc-2', libelle: 'Piloter la satisfaction et l\'expérience client tout au long du parcours dans une perspective durable' },
-      { id: 'ce-rc-3', libelle: 'Valoriser le portefeuille client grâce à l\'exploitation des données client dans le respect de la réglementation' },
+      { id: 'ce-rc-2', libelle: 'Piloter la satisfaction et l\'expérience client dans une perspective durable' },
+      { id: 'ce-rc-3', libelle: 'Valoriser le portefeuille client via l\'exploitation des données' },
     ],
     projetsAssocies: ['sae-omnicanalite-b3', 'sae-job-dating-b2'],
-    progression: 70,
   },
 ];
 

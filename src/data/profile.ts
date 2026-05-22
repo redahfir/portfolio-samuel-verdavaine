@@ -41,10 +41,10 @@ Chaque SAÉ, chaque projet, chaque situation professionnelle a été pour moi un
   },
 
   stats: [
-    { label: 'SAÉ réalisées', valeur: '7', unite: 'projets' },
-    { label: 'Compétences BUT', valeur: '5', unite: 'blocs' },
-    { label: 'Années de formation', valeur: '3', unite: 'ans' },
-    { label: 'Apprentissages critiques', valeur: '12+', unite: 'AC' },
+    { label: 'SAÉ professionnelles', valeur: '7', icone: 'FolderOpen' },
+    { label: 'Compétences BUT maîtrisées', valeur: '5 blocs', icone: 'Award' },
+    { label: 'Années de formation', valeur: 'BUT1 → BUT3', icone: 'GraduationCap' },
+    { label: 'Disponible pour un stage', valeur: 'Juin 2026', icone: 'Calendar' },
   ],
 };
 

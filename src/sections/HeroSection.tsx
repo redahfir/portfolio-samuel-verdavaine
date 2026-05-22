@@ -111,18 +111,18 @@ const HeroSection: FC = () => {
             </a>
           </motion.div>
 
-          {/* Stats */}
+          {/* Stats concrètes */}
           <motion.div
             variants={fadeInUp}
-            className="grid grid-cols-2 sm:grid-cols-4 gap-3 w-full max-w-2xl"
+            className="grid grid-cols-2 sm:grid-cols-4 gap-3 w-full max-w-3xl"
           >
             {profile.stats.map((stat) => (
               <div
                 key={stat.label}
-                className="glass-card rounded-2xl p-4 text-center hover:bg-white/7 transition-all duration-200"
+                className="glass-card rounded-2xl p-4 text-center hover:bg-white/7 transition-all duration-200 border border-white/6"
               >
-                <p className="font-display font-bold text-2xl text-white">{stat.valeur}</p>
-                <p className="text-zinc-500 text-xs mt-0.5">{stat.label}</p>
+                <p className="font-display font-semibold text-base text-white leading-snug">{stat.valeur}</p>
+                <p className="text-zinc-500 text-xs mt-1 leading-snug">{stat.label}</p>
               </div>
             ))}
           </motion.div>
