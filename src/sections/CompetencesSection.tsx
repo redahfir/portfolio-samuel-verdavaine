@@ -9,6 +9,8 @@ import React from 'react';
 import { competences } from '../data/competences';
 import { projets } from '../data/projets';
 import { fadeInUp, viewportConfig } from '../utils/animations';
+import { accentColor } from '../utils/colors';
+import { useTheme } from '../context/ThemeContext';
 import type { Competence, NiveauMaitrise } from '../types';
 
 const iconMap: Record<string, FC<{ size?: number; className?: string; style?: React.CSSProperties }>> = {
@@ -37,6 +39,8 @@ const MaitriseBadge: FC<{ niveau: NiveauMaitrise }> = ({ niveau }) => {
 // ── Ligne compétence ───────────────────────────────────────────
 const CompetenceRow: FC<{ competence: Competence; index: number }> = ({ competence, index }) => {
   const [open, setOpen] = useState(false);
+  const { theme } = useTheme();
+  const accent = accentColor(competence, theme);
   const Icon = iconMap[competence.icone] || TrendingUp;
   const num = String(index + 1).padStart(2, '0');
   const projetsLies = projets.filter(p => p.competencesLiees.includes(competence.id));
@@ -47,7 +51,7 @@ const CompetenceRow: FC<{ competence: Competence; index: number }> = ({ competen
     <motion.div variants={fadeInUp} className="border-b border-white/6 last:border-0">
       <button
         onClick={() => setOpen(!open)}
-        className="w-full text-left group py-6 sm:py-7 flex items-start gap-5 sm:gap-8 hover:border-white/12 transition-all duration-300"
+        className="w-full text-left group py-6 sm:py-7 flex items-start gap-5 sm:gap-8 transition-all duration-300"
       >
         {/* Numéro */}
         <span className="sae-number pt-1 w-6 shrink-0 group-hover:text-zinc-500 transition-colors">{num}</span>
@@ -57,9 +61,9 @@ const CompetenceRow: FC<{ competence: Competence; index: number }> = ({ competen
           <div className="flex flex-wrap items-center gap-3 mb-2">
             <div
               className="w-7 h-7 rounded-lg flex items-center justify-center shrink-0"
-              style={{ background: `${competence.couleurAccent}15` }}
+              style={{ background: `${accent}15` }}
             >
-              <Icon size={14} style={{ color: competence.couleurAccent }} />
+              <Icon size={14} style={{ color: accent }} />
             </div>
             <h3 className="font-display text-white font-semibold text-lg sm:text-xl leading-tight group-hover:text-blue-100 transition-colors">
               {competence.titre}
@@ -69,7 +73,7 @@ const CompetenceRow: FC<{ competence: Competence; index: number }> = ({ competen
 
           <p className="text-zinc-500 text-sm leading-relaxed mb-3 line-clamp-2">{competence.description}</p>
 
-          {/* Savoir-faire preview (3 premiers) — masqué sur mobile */}
+          {/* Savoir-faire preview — masqué sur mobile */}
           <div className="hidden sm:flex flex-wrap gap-2">
             {competence.savoirFaire.slice(0, 3).map((sf, i) => (
               <span key={i} className="text-xs text-zinc-500 border border-white/8 rounded-full px-2.5 py-0.5">
@@ -109,14 +113,13 @@ const CompetenceRow: FC<{ competence: Competence; index: number }> = ({ competen
               {/* Colonne 1 — Savoir-faire + Projets */}
               <div className="space-y-6">
                 <div>
-                  <p className="text-xs text-zinc-600 uppercase tracking-widest font-semibold mb-3">Ce que je sais faire</p>
+                  <p className="text-xs text-zinc-600 uppercase tracking-widest font-semibold mb-3" style={{ color: accent }}>
+                    Ce que je sais faire
+                  </p>
                   <ul className="space-y-2">
                     {competence.savoirFaire.map((sf, i) => (
                       <li key={i} className="flex items-start gap-2.5 text-sm text-zinc-300">
-                        <div
-                          className="w-1.5 h-1.5 rounded-full mt-1.5 shrink-0"
-                          style={{ background: competence.couleurAccent }}
-                        />
+                        <div className="w-1.5 h-1.5 rounded-full mt-1.5 shrink-0" style={{ background: accent }} />
                         {sf}
                       </li>
                     ))}

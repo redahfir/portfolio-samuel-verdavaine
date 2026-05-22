@@ -29,7 +29,8 @@ export interface Competence {
   niveauIntitule: string;
   niveau: NiveauProgression;
   couleur: string;
-  couleurAccent: string;
+  couleurAccent: string;      // dark mode (on dark bg)
+  couleurAccentClair: string; // light mode (on white/near-white, ≥4.5:1 contrast)
   icone: string;
   objectif: string;
   description: string;

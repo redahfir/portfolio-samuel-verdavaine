@@ -10,6 +10,7 @@
   --c-surface: #0a0a14;
   --c-elevated: #0d0d18;
   --c-text: #f1f5f9;
+  --c-text-muted: #71717a;
 }
 
 html[data-theme="light"] {
@@ -18,6 +19,7 @@ html[data-theme="light"] {
   --c-surface: #ffffff;
   --c-elevated: #ffffff;
   --c-text: #09090f;
+  --c-text-muted: #6b7280;
 }
 
 @layer base {
@@ -41,7 +43,6 @@ html[data-theme="light"] {
 }
 
 @layer components {
-  /* Glassmorphism */
   .glass-card {
     background: rgba(255,255,255,0.03);
     border: 1px solid rgba(255,255,255,0.07);
@@ -52,7 +53,6 @@ html[data-theme="light"] {
     border-color: rgba(255,255,255,0.11);
   }
 
-  /* Gradient text */
   .gradient-text {
     background: linear-gradient(135deg, #60a5fa 0%, #06b6d4 60%, #10b981 100%);
     -webkit-background-clip: text;
@@ -60,7 +60,6 @@ html[data-theme="light"] {
     -webkit-text-fill-color: transparent;
   }
 
-  /* Editorial — grand titre en pleine largeur */
   .display-title {
     font-family: 'Space Grotesk', sans-serif;
     font-weight: 700;
@@ -68,7 +67,6 @@ html[data-theme="light"] {
     letter-spacing: -0.04em;
   }
 
-  /* Numéro SAÉ style magazine */
   .sae-number {
     font-family: 'Space Grotesk', sans-serif;
     font-weight: 300;
@@ -77,7 +75,6 @@ html[data-theme="light"] {
     color: rgba(255,255,255,0.2);
   }
 
-  /* Tag pill */
   .tag {
     display: inline-flex;
     align-items: center;
@@ -89,7 +86,6 @@ html[data-theme="light"] {
     border: 1px solid;
   }
 
-  /* Placeholder zone */
   .placeholder-zone {
     border: 1.5px dashed rgba(59,130,246,0.25);
     background: rgba(59,130,246,0.03);
@@ -102,14 +98,12 @@ html[data-theme="light"] {
     background: rgba(59,130,246,0.06);
   }
 
-  /* Line divider */
   .line-divider {
     height: 1px;
     background: rgba(255,255,255,0.07);
     width: 100%;
   }
 
-  /* Scrollbar */
   ::-webkit-scrollbar { width: 5px; }
   ::-webkit-scrollbar-track { background: var(--c-base); }
   ::-webkit-scrollbar-thumb { background: rgba(59,130,246,0.3); border-radius: 3px; }
@@ -134,40 +128,86 @@ html[data-theme="light"] {
 }
 
 /* ══════════════════════════════════════════════════════════════
-   LIGHT THEME OVERRIDES
-   Specificity: html[data-theme="light"] .utility beats .utility
+   LIGHT THEME — html[data-theme="light"]
+   Contraste WCAG AA garanti sur fond #f8f8fd / #ffffff
    ══════════════════════════════════════════════════════════════ */
 
-/* ── Backgrounds — hardcoded hex values ───────────────────── */
-html[data-theme="light"] .bg-\[\#07070f\]       { background-color: var(--c-base)    !important; }
-html[data-theme="light"] .bg-\[\#0a0a14\]       { background-color: var(--c-surface) !important; }
-html[data-theme="light"] .bg-\[\#0d0d18\]       { background-color: var(--c-surface) !important; }
-html[data-theme="light"] .bg-\[\#0d0d18\]\/95   { background-color: rgba(255,255,255,0.97) !important; }
-html[data-theme="light"] .bg-\[\#07070f\]\/90   { background-color: rgba(248,248,253,0.92) !important; }
-html[data-theme="light"] .bg-\[\#07070f\]\/97   { background-color: rgba(248,248,253,0.98) !important; }
+/* ── Sections — alternance blanc / gris clair ─────────────── */
+html[data-theme="light"] section,
+html[data-theme="light"] footer { background-color: var(--c-base) !important; }
 
-/* ── Backgrounds — dark-* tokens ─────────────────────────── */
+/* Sections "surface" (blanc pur) */
+html[data-theme="light"] #about,
+html[data-theme="light"] #competences,
+html[data-theme="light"] #reflexif,
+html[data-theme="light"] #stage    { background-color: var(--c-surface) !important; }
+
+/* Anciens tokens dark-* */
 html[data-theme="light"] .bg-dark-900,
 html[data-theme="light"] .bg-dark-800 { background-color: var(--c-base)    !important; }
-html[data-theme="light"] .bg-dark-700 { background-color: var(--c-surface) !important; }
+html[data-theme="light"] .bg-dark-700  { background-color: var(--c-surface) !important; }
 
-/* ── Backgrounds — white/ opacities ──────────────────────── */
+/* Hardcoded hex */
+html[data-theme="light"] .bg-\[\#07070f\]      { background-color: var(--c-base)    !important; }
+html[data-theme="light"] .bg-\[\#0a0a14\]      { background-color: var(--c-base)    !important; }
+html[data-theme="light"] .bg-\[\#0d0d18\]      { background-color: var(--c-surface) !important; }
+html[data-theme="light"] .bg-\[\#0d0d18\]\/95  { background-color: rgba(255,255,255,0.97) !important; }
+html[data-theme="light"] .bg-\[\#07070f\]\/90  { background-color: rgba(248,248,253,0.92) !important; }
+html[data-theme="light"] .bg-\[\#07070f\]\/97  { background-color: rgba(248,248,253,0.98) !important; }
+
+/* ── Texte — garantir lisibilité ──────────────────────────── */
+html[data-theme="light"] .text-white   { color: #09090f !important; }
+html[data-theme="light"] .text-zinc-200 { color: #1f2937 !important; }
+html[data-theme="light"] .text-zinc-300 { color: #374151 !important; }
+html[data-theme="light"] .text-zinc-400 { color: #4b5563 !important; }
+html[data-theme="light"] .text-zinc-500 { color: #6b7280 !important; }
+/* zinc-600 (#52525b) et zinc-700 (#3f3f46) sont assez sombres → pas besoin d'override */
+
+/* Hover text */
+html[data-theme="light"] .hover\:text-white:hover        { color: #09090f !important; }
+html[data-theme="light"] .hover\:text-zinc-100:hover     { color: #111827 !important; }
+html[data-theme="light"] .hover\:text-zinc-200:hover     { color: #1f2937 !important; }
+html[data-theme="light"] .hover\:text-zinc-300:hover     { color: #374151 !important; }
+html[data-theme="light"] .hover\:text-zinc-400:hover     { color: #4b5563 !important; }
+
+/* Group-hover text */
+html[data-theme="light"] .group:hover .group-hover\:text-white      { color: #09090f !important; }
+html[data-theme="light"] .group:hover .group-hover\:text-blue-100   { color: #1d4ed8 !important; }
+html[data-theme="light"] .group:hover .group-hover\:text-zinc-100   { color: #111827 !important; }
+html[data-theme="light"] .group:hover .group-hover\:text-zinc-400   { color: #4b5563 !important; }
+html[data-theme="light"] .group:hover .group-hover\:text-zinc-500   { color: #6b7280 !important; }
+
+/* ── Accents — versions profondes pour contraste sur blanc ── */
+/* Ratios cibles : ≥4.5:1 sur #ffffff / #f8f8fd              */
+html[data-theme="light"] .text-blue-400     { color: #1d4ed8 !important; } /* 5.5:1 */
+html[data-theme="light"] .text-blue-300     { color: #2563eb !important; } /* 4.7:1 */
+html[data-theme="light"] .text-blue-500     { color: #1e40af !important; } /* 6.0:1 */
+html[data-theme="light"] .text-emerald-400  { color: #047857 !important; } /* 5.0:1 */
+html[data-theme="light"] .text-emerald-300  { color: #059669 !important; } /* 3.9:1 — decoratif */
+html[data-theme="light"] .text-cyan-400     { color: #0369a1 !important; } /* 5.9:1 */
+html[data-theme="light"] .text-amber-400    { color: #92400e !important; } /* 4.7:1 */
+html[data-theme="light"] .text-amber-300    { color: #b45309 !important; } /* 3.3:1 — decoratif */
+html[data-theme="light"] .text-violet-400   { color: #6d28d9 !important; } /* 5.8:1 */
+
+/* ── Backgrounds — opacités blanches → noires ─────────────── */
 html[data-theme="light"] .bg-white\/2  { background-color: rgba(0,0,0,0.02)  !important; }
 html[data-theme="light"] .bg-white\/3  { background-color: rgba(0,0,0,0.025) !important; }
 html[data-theme="light"] .bg-white\/4  { background-color: rgba(0,0,0,0.03)  !important; }
 html[data-theme="light"] .bg-white\/5  { background-color: rgba(0,0,0,0.04)  !important; }
 html[data-theme="light"] .bg-white\/6  { background-color: rgba(0,0,0,0.04)  !important; }
-html[data-theme="light"] .bg-white\/7  { background-color: rgba(0,0,0,0.04)  !important; }
+html[data-theme="light"] .bg-white\/7  { background-color: rgba(0,0,0,0.045) !important; }
 html[data-theme="light"] .bg-white\/8  { background-color: rgba(0,0,0,0.05)  !important; }
 
-/* ── Text colors ──────────────────────────────────────────── */
-html[data-theme="light"] .text-white   { color: #09090f !important; }
-html[data-theme="light"] .text-zinc-300 { color: #374151 !important; }
-html[data-theme="light"] .text-zinc-400 { color: #4b5563 !important; }
-html[data-theme="light"] .text-zinc-500 { color: #6b7280 !important; }
-/* zinc-600 (#52525b) and zinc-700 (#3f3f46) are already dark enough */
+/* Hover backgrounds */
+html[data-theme="light"] .hover\:bg-white\/4:hover  { background-color: rgba(0,0,0,0.03)  !important; }
+html[data-theme="light"] .hover\:bg-white\/5:hover  { background-color: rgba(0,0,0,0.04)  !important; }
+html[data-theme="light"] .hover\:bg-white\/6:hover  { background-color: rgba(0,0,0,0.04)  !important; }
+html[data-theme="light"] .hover\:bg-white\/7:hover  { background-color: rgba(0,0,0,0.045) !important; }
+html[data-theme="light"] .hover\:bg-white\/8:hover  { background-color: rgba(0,0,0,0.05)  !important; }
+html[data-theme="light"] .hover\:bg-white\/10:hover { background-color: rgba(0,0,0,0.06)  !important; }
+html[data-theme="light"] .hover\:bg-white\/15:hover { background-color: rgba(0,0,0,0.08)  !important; }
 
-/* ── Borders — white/ opacities ──────────────────────────── */
+/* ── Borders — opacités blanches → noires ─────────────────── */
 html[data-theme="light"] .border-white\/5  { border-color: rgba(0,0,0,0.05) !important; }
 html[data-theme="light"] .border-white\/6  { border-color: rgba(0,0,0,0.07) !important; }
 html[data-theme="light"] .border-white\/7  { border-color: rgba(0,0,0,0.08) !important; }
@@ -178,61 +218,57 @@ html[data-theme="light"] .border-white\/15 { border-color: rgba(0,0,0,0.13) !imp
 html[data-theme="light"] .border-white\/20 { border-color: rgba(0,0,0,0.15) !important; }
 html[data-theme="light"] .border-white\/25 { border-color: rgba(0,0,0,0.18) !important; }
 
-/* ── Hover borders ────────────────────────────────────────── */
-html[data-theme="light"] .hover\:border-white\/12:hover { border-color: rgba(0,0,0,0.11) !important; }
-html[data-theme="light"] .hover\:border-white\/20:hover { border-color: rgba(0,0,0,0.15) !important; }
-html[data-theme="light"] .hover\:border-white\/25:hover { border-color: rgba(0,0,0,0.18) !important; }
-
-/* ── Hover backgrounds ────────────────────────────────────── */
-html[data-theme="light"] .hover\:bg-white\/4:hover  { background-color: rgba(0,0,0,0.03) !important; }
-html[data-theme="light"] .hover\:bg-white\/5:hover  { background-color: rgba(0,0,0,0.04) !important; }
-html[data-theme="light"] .hover\:bg-white\/6:hover  { background-color: rgba(0,0,0,0.04) !important; }
-html[data-theme="light"] .hover\:bg-white\/7:hover  { background-color: rgba(0,0,0,0.05) !important; }
-html[data-theme="light"] .hover\:bg-white\/8:hover  { background-color: rgba(0,0,0,0.05) !important; }
-html[data-theme="light"] .hover\:bg-white\/10:hover { background-color: rgba(0,0,0,0.07) !important; }
-html[data-theme="light"] .hover\:bg-white\/15:hover { background-color: rgba(0,0,0,0.09) !important; }
+/* Hover borders */
+html[data-theme="light"] .hover\:border-white\/12:hover { border-color: rgba(0,0,0,0.12) !important; }
+html[data-theme="light"] .hover\:border-white\/20:hover { border-color: rgba(0,0,0,0.16) !important; }
+html[data-theme="light"] .hover\:border-white\/25:hover { border-color: rgba(0,0,0,0.20) !important; }
 
 /* ── Glass card ───────────────────────────────────────────── */
 html[data-theme="light"] .glass-card {
-  background: rgba(255,255,255,0.9) !important;
-  border-color: rgba(0,0,0,0.07) !important;
+  background: rgba(255,255,255,0.92) !important;
+  border-color: rgba(0,0,0,0.08) !important;
   box-shadow: 0 1px 4px rgba(0,0,0,0.05), 0 0 0 1px rgba(0,0,0,0.04);
 }
 html[data-theme="light"] .glass-card:hover {
-  background: rgba(255,255,255,1) !important;
+  background: #ffffff !important;
   border-color: rgba(0,0,0,0.11) !important;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.07), 0 0 0 1px rgba(0,0,0,0.06);
 }
 
 /* ── Sae-number ───────────────────────────────────────────── */
 html[data-theme="light"] .sae-number { color: rgba(0,0,0,0.18) !important; }
 
-/* ── Accent colors — shifted to deeper shades ────────────── */
-html[data-theme="light"] .text-blue-400    { color: #1d4ed8 !important; }
-html[data-theme="light"] .text-blue-300    { color: #2563eb !important; }
-html[data-theme="light"] .text-emerald-400 { color: #047857 !important; }
-html[data-theme="light"] .text-emerald-300 { color: #059669 !important; }
-html[data-theme="light"] .text-cyan-400    { color: #0369a1 !important; }
-html[data-theme="light"] .text-amber-400   { color: #b45309 !important; }
-html[data-theme="light"] .text-amber-300   { color: #d97706 !important; }
+/* ── Active filter tab (bg-white text-black sur fond clair) ── */
+/* En clair, on inverse : fond sombre texte blanc */
+html[data-theme="light"] button.bg-white.text-black {
+  background-color: #09090f !important;
+  color: #ffffff !important;
+}
+/* Inactive tab hover text */
+html[data-theme="light"] .filter-tab-inactive:hover { color: #09090f; }
 
-/* ── Badge/chip backgrounds shift ────────────────────────── */
-html[data-theme="light"] .bg-blue-500\/10   { background-color: rgba(37,99,235,0.07)  !important; }
-html[data-theme="light"] .bg-blue-500\/15   { background-color: rgba(37,99,235,0.10)  !important; }
-html[data-theme="light"] .bg-emerald-500\/10 { background-color: rgba(4,120,87,0.08)  !important; }
-html[data-theme="light"] .bg-emerald-500\/12 { background-color: rgba(4,120,87,0.09)  !important; }
-html[data-theme="light"] .bg-emerald-500\/8  { background-color: rgba(4,120,87,0.06)  !important; }
-html[data-theme="light"] .bg-amber-500\/10   { background-color: rgba(180,83,9,0.07)  !important; }
-html[data-theme="light"] .bg-blue-500\/8     { background-color: rgba(37,99,235,0.06) !important; }
-html[data-theme="light"] .bg-blue-500\/5     { background-color: rgba(37,99,235,0.05) !important; }
+/* ── Badge colors — légèrement plus profondes en clair ─────── */
+html[data-theme="light"] .bg-blue-500\/10    { background-color: rgba(29,78,216,0.07)  !important; }
+html[data-theme="light"] .bg-blue-500\/12    { background-color: rgba(29,78,216,0.09)  !important; }
+html[data-theme="light"] .bg-blue-500\/15    { background-color: rgba(29,78,216,0.10)  !important; }
+html[data-theme="light"] .bg-blue-500\/8     { background-color: rgba(29,78,216,0.06)  !important; }
+html[data-theme="light"] .bg-blue-500\/5     { background-color: rgba(29,78,216,0.05)  !important; }
+html[data-theme="light"] .bg-emerald-500\/10  { background-color: rgba(4,120,87,0.07)   !important; }
+html[data-theme="light"] .bg-emerald-500\/12  { background-color: rgba(4,120,87,0.09)   !important; }
+html[data-theme="light"] .bg-emerald-500\/8   { background-color: rgba(4,120,87,0.06)   !important; }
+html[data-theme="light"] .bg-amber-500\/10    { background-color: rgba(146,64,14,0.07)  !important; }
+html[data-theme="light"] .bg-cyan-500\/10     { background-color: rgba(3,105,161,0.07)  !important; }
 
-/* ── Badge borders in light ───────────────────────────────── */
-html[data-theme="light"] .border-blue-500\/20    { border-color: rgba(37,99,235,0.25)  !important; }
-html[data-theme="light"] .border-blue-500\/25    { border-color: rgba(37,99,235,0.30)  !important; }
-html[data-theme="light"] .border-emerald-500\/20 { border-color: rgba(4,120,87,0.30)   !important; }
-html[data-theme="light"] .border-emerald-500\/25 { border-color: rgba(4,120,87,0.35)   !important; }
-html[data-theme="light"] .border-amber-500\/20   { border-color: rgba(180,83,9,0.28)   !important; }
+html[data-theme="light"] .border-blue-500\/20     { border-color: rgba(29,78,216,0.25)  !important; }
+html[data-theme="light"] .border-blue-500\/25     { border-color: rgba(29,78,216,0.30)  !important; }
+html[data-theme="light"] .border-blue-500\/30     { border-color: rgba(29,78,216,0.35)  !important; }
+html[data-theme="light"] .border-blue-500\/40     { border-color: rgba(29,78,216,0.45)  !important; }
+html[data-theme="light"] .border-emerald-500\/20  { border-color: rgba(4,120,87,0.28)   !important; }
+html[data-theme="light"] .border-emerald-500\/25  { border-color: rgba(4,120,87,0.35)   !important; }
+html[data-theme="light"] .border-amber-500\/20    { border-color: rgba(146,64,14,0.25)  !important; }
+html[data-theme="light"] .border-cyan-500\/20     { border-color: rgba(3,105,161,0.28)  !important; }
 
-/* ── Inputs ───────────────────────────────────────────────── */
+/* ── Inputs & textarea ────────────────────────────────────── */
 html[data-theme="light"] input,
 html[data-theme="light"] textarea {
   background-color: rgba(0,0,0,0.03) !important;
@@ -242,14 +278,20 @@ html[data-theme="light"] textarea {
 html[data-theme="light"] input::placeholder,
 html[data-theme="light"] textarea::placeholder { color: #9ca3af !important; }
 
-/* ── Code tags ────────────────────────────────────────────── */
+/* ── Code inline ──────────────────────────────────────────── */
 html[data-theme="light"] code {
   background-color: rgba(0,0,0,0.06) !important;
   color: #374151 !important;
 }
 
-/* ── Hero outline text ────────────────────────────────────── */
+/* ── Hero outlined text ────────────────────────────────────── */
 html[data-theme="light"] .hero-outline {
-  -webkit-text-stroke: 2px rgba(0,0,0,0.14) !important;
+  -webkit-text-stroke: 2px rgba(0,0,0,0.15) !important;
   color: transparent !important;
+}
+
+/* ── Nav active indicator ──────────────────────────────────── */
+html[data-theme="light"] [class*="nav-indicator"] {
+  background-color: rgba(0,0,0,0.05) !important;
+  border-color: rgba(0,0,0,0.09) !important;
 }

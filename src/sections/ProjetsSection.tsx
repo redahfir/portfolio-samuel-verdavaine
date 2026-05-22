@@ -8,6 +8,8 @@ import PlaceholderZone from '../components/ui/PlaceholderZone';
 import { projets } from '../data/projets';
 import { competences } from '../data/competences';
 import { fadeInUp, viewportConfig } from '../utils/animations';
+import { accentColor } from '../utils/colors';
+import { useTheme } from '../context/ThemeContext';
 import type { Projet } from '../types';
 
 const anneeColors: Record<string, { text: string; bg: string; border: string }> = {
@@ -18,6 +20,7 @@ const anneeColors: Record<string, { text: string; bg: string; border: string }> 
 
 // ── Modal détail ────────────────────────────────────────────────
 const ProjetModal: FC<{ projet: Projet; onClose: () => void }> = ({ projet, onClose }) => {
+  const { theme } = useTheme();
   const ac = anneeColors[projet.annee];
   const compLiees = projet.competencesLiees.map(id => competences.find(c => c.id === id)).filter(Boolean);
 
@@ -115,7 +118,11 @@ const ProjetModal: FC<{ projet: Projet; onClose: () => void }> = ({ projet, onCl
                 <span
                   key={comp.id}
                   className="text-xs font-medium px-3 py-1.5 rounded-full border"
-                  style={{ color: comp.couleurAccent, borderColor: `${comp.couleurAccent}30`, background: `${comp.couleurAccent}10` }}
+                  style={{
+                    color: accentColor(comp, theme),
+                    borderColor: `${accentColor(comp, theme)}35`,
+                    background: `${accentColor(comp, theme)}10`,
+                  }}
                 >
                   {comp.titre}
                 </span>
@@ -165,6 +172,7 @@ const ProjetModal: FC<{ projet: Projet; onClose: () => void }> = ({ projet, onCl
 
 // ── Ligne SAÉ (style liste numérotée) ──────────────────────────
 const ProjetRow: FC<{ projet: Projet; index: number; onClick: () => void }> = ({ projet, index, onClick }) => {
+  const { theme } = useTheme();
   const ac = anneeColors[projet.annee];
   const compLiees = projet.competencesLiees.map(id => competences.find(c => c.id === id)).filter(Boolean);
   const num = String(index + 1).padStart(2, '0');
@@ -197,7 +205,11 @@ const ProjetRow: FC<{ projet: Projet; index: number; onClick: () => void }> = ({
               <span
                 key={comp.id}
                 className="text-xs px-2.5 py-0.5 rounded-full border"
-                style={{ color: `${comp.couleurAccent}cc`, borderColor: `${comp.couleurAccent}20`, background: `${comp.couleurAccent}08` }}
+                style={{
+                  color: accentColor(comp, theme),
+                  borderColor: `${accentColor(comp, theme)}28`,
+                  background: `${accentColor(comp, theme)}0d`,
+                }}
               >
                 {comp.titre}
               </span>

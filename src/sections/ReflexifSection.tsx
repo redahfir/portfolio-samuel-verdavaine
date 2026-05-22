@@ -10,6 +10,8 @@ import PlaceholderZone from '../components/ui/PlaceholderZone';
 import { entreesReflexives } from '../data/reflexif';
 import { competences } from '../data/competences';
 import { fadeInUp, staggerContainer, viewportConfig } from '../utils/animations';
+import { accentColor } from '../utils/colors';
+import { useTheme } from '../context/ThemeContext';
 import type { EntreeReflexive } from '../types';
 
 const iconMap: Record<string, FC<{ size?: number; style?: object }>> = {
@@ -26,8 +28,10 @@ const compIconMap: Record<string, string> = {
 
 const EntreeReflexiveCard: FC<{ entree: EntreeReflexive; index: number }> = ({ entree }) => {
   const [expanded, setExpanded] = useState(false);
+  const { theme } = useTheme();
   const comp = competences.find((c) => c.id === entree.competenceId);
   if (!comp) return null;
+  const accent = accentColor(comp, theme);
   const Icon = iconMap[compIconMap[entree.competenceId]] || TrendingUp;
 
   // Detect if content is a TODO placeholder
@@ -37,25 +41,25 @@ const EntreeReflexiveCard: FC<{ entree: EntreeReflexive; index: number }> = ({ e
     <motion.div
       variants={fadeInUp}
       className="glass-card rounded-2xl border overflow-hidden"
-      style={{ borderColor: `${comp.couleurAccent}20` }}
+      style={{ borderColor: `${accent}22` }}
     >
       {/* Header */}
       <div
         className="p-5 sm:p-6"
-        style={{ background: `linear-gradient(135deg, ${comp.couleurAccent}08, transparent)` }}
+        style={{ background: `linear-gradient(135deg, ${accent}08, transparent)` }}
       >
         <div className="flex items-start gap-4">
           <div
             className="w-11 h-11 rounded-xl flex items-center justify-center shrink-0"
-            style={{ background: `${comp.couleurAccent}15` }}
+            style={{ background: `${accent}15` }}
           >
-            <Icon size={20} style={{ color: comp.couleurAccent }} />
+            <Icon size={20} style={{ color: accent }} />
           </div>
           <div className="flex-1 min-w-0">
             <div className="flex items-start justify-between gap-3">
               <div>
                 <h3 className="font-display text-white font-bold text-base">{comp.titre}</h3>
-                <p className="text-xs mt-0.5" style={{ color: `${comp.couleurAccent}cc` }}>
+                <p className="text-xs mt-0.5" style={{ color: accent }}>
                   {comp.niveauIntitule}
                 </p>
               </div>
@@ -88,7 +92,7 @@ const EntreeReflexiveCard: FC<{ entree: EntreeReflexive; index: number }> = ({ e
       <button
         onClick={() => setExpanded(!expanded)}
         className="w-full flex items-center justify-between px-5 sm:px-6 py-3 border-t text-xs font-semibold text-zinc-400 hover:text-zinc-200 transition-colors"
-        style={{ borderColor: `${comp.couleurAccent}12` }}
+        style={{ borderColor: `${accent}15` }}
       >
         <span>Détail du tableau réflexif</span>
         {expanded ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
@@ -166,13 +170,13 @@ const EntreeReflexiveCard: FC<{ entree: EntreeReflexive; index: number }> = ({ e
               <div
                 className="rounded-xl p-4"
                 style={{
-                  background: `${comp.couleurAccent}08`,
-                  borderLeft: `3px solid ${comp.couleurAccent}`,
+                  background: `${accent}08`,
+                  borderLeft: `3px solid ${accent}`,
                 }}
               >
                 <h4
                   className="text-xs font-bold uppercase tracking-wider mb-2 flex items-center gap-1.5"
-                  style={{ color: comp.couleurAccent }}
+                  style={{ color: accent }}
                 >
                   <BookOpen size={12} /> Bilan des apprentissages
                 </h4>
