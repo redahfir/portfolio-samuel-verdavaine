@@ -2,148 +2,94 @@ import { useState } from 'react';
 import type { FC } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
-  BarChart3, Megaphone, Building2, Lightbulb,
-  CalendarCheck, Globe, MessageSquare,
-  X, ChevronRight, Wrench, Target, Eye, BookOpen, AlertCircle
+  X, ArrowUpRight, ChevronRight, Wrench, BookOpen, AlertCircle, Eye, Plus
 } from 'lucide-react';
-import SectionTitle from '../components/ui/SectionTitle';
-import Badge from '../components/ui/Badge';
 import PlaceholderZone from '../components/ui/PlaceholderZone';
 import { projets } from '../data/projets';
 import { competences } from '../data/competences';
-import { fadeInUp, staggerContainer, viewportConfig } from '../utils/animations';
+import { fadeInUp, viewportConfig } from '../utils/animations';
 import type { Projet } from '../types';
 
-const iconMap: Record<string, FC<{ size?: number; style?: object }>> = {
-  BarChart3, Megaphone, Building2, Lightbulb,
-  CalendarCheck, Globe, MessageSquare,
+const anneeColors: Record<string, { text: string; bg: string; border: string }> = {
+  BUT1: { text: 'text-blue-400', bg: 'bg-blue-500/10', border: 'border-blue-500/20' },
+  BUT2: { text: 'text-cyan-400', bg: 'bg-cyan-500/10', border: 'border-cyan-500/20' },
+  BUT3: { text: 'text-emerald-400', bg: 'bg-emerald-500/10', border: 'border-emerald-500/20' },
 };
 
-const anneeColors: Record<string, string> = {
-  BUT1: '#3b82f6',
-  BUT2: '#06b6d4',
-  BUT3: '#10b981',
-};
-
-const anneeVariants: Record<string, 'blue' | 'cyan' | 'emerald'> = {
-  BUT1: 'blue',
-  BUT2: 'cyan',
-  BUT3: 'emerald',
-};
-
-// ── Modal de détail projet ───────────────────────────────────
+// ── Modal détail ────────────────────────────────────────────────
 const ProjetModal: FC<{ projet: Projet; onClose: () => void }> = ({ projet, onClose }) => {
-  const Icon = iconMap[projet.icone] || Globe;
-  const color = anneeColors[projet.annee];
-  const compLiees = projet.competencesLiees.map(
-    (id) => competences.find((c) => c.id === id)
-  ).filter(Boolean);
+  const ac = anneeColors[projet.annee];
+  const compLiees = projet.competencesLiees.map(id => competences.find(c => c.id === id)).filter(Boolean);
 
   return (
     <motion.div
-      className="fixed inset-0 z-50 flex items-center justify-center p-4"
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-8"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
     >
-      {/* Backdrop */}
-      <div className="absolute inset-0 bg-dark-900/90 backdrop-blur-xl" onClick={onClose} />
+      <div className="absolute inset-0 bg-black/85 backdrop-blur-xl" onClick={onClose} />
 
-      {/* Modal */}
       <motion.div
-        className="relative w-full max-w-3xl max-h-[90vh] overflow-y-auto glass-card rounded-3xl border border-white/10 shadow-2xl"
-        initial={{ scale: 0.95, opacity: 0, y: 20 }}
-        animate={{ scale: 1, opacity: 1, y: 0 }}
-        exit={{ scale: 0.95, opacity: 0, y: 20 }}
-        transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+        className="relative w-full max-w-3xl max-h-[92vh] overflow-y-auto bg-[#0d0d18] border border-white/10 rounded-2xl shadow-2xl"
+        initial={{ y: 24, opacity: 0, scale: 0.98 }}
+        animate={{ y: 0, opacity: 1, scale: 1 }}
+        exit={{ y: 24, opacity: 0, scale: 0.98 }}
+        transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] as [number,number,number,number] }}
       >
-        {/* Header */}
-        <div
-          className="p-6 border-b border-white/8"
-          style={{ background: `linear-gradient(135deg, ${color}12, transparent)` }}
-        >
-          <div className="flex items-start justify-between gap-4">
-            <div className="flex items-start gap-4">
-              <div
-                className="w-12 h-12 rounded-2xl flex items-center justify-center shrink-0"
-                style={{ background: `${color}20` }}
-              >
-                <Icon size={22} style={{ color }} />
-              </div>
-              <div>
-                <div className="flex items-center gap-2 mb-1">
-                  <Badge variant={anneeVariants[projet.annee]} size="sm">{projet.annee}</Badge>
-                  <Badge variant="default" size="sm">{projet.categorie}</Badge>
-                </div>
-                <h2 className="font-display text-xl font-bold text-white leading-tight">{projet.titre}</h2>
-              </div>
+        {/* Header modal */}
+        <div className="sticky top-0 z-10 bg-[#0d0d18]/95 backdrop-blur-sm border-b border-white/7 p-6 flex items-start justify-between gap-4">
+          <div>
+            <div className="flex items-center gap-2 mb-2 flex-wrap">
+              <span className={`tag ${ac.text} ${ac.bg} ${ac.border}`}>{projet.annee}</span>
+              <span className="tag text-zinc-400 bg-white/5 border-white/10">{projet.categorie}</span>
             </div>
-            <button
-              onClick={onClose}
-              className="shrink-0 w-9 h-9 rounded-xl bg-white/8 hover:bg-white/15 flex items-center justify-center text-zinc-400 hover:text-white transition-all"
-            >
-              <X size={18} />
-            </button>
+            <h2 className="font-display text-xl font-bold text-white leading-tight">{projet.titre}</h2>
           </div>
+          <button
+            onClick={onClose}
+            className="shrink-0 w-9 h-9 rounded-xl border border-white/10 flex items-center justify-center text-zinc-500 hover:text-white hover:border-white/25 transition-all"
+          >
+            <X size={16} />
+          </button>
         </div>
 
-        {/* Body */}
-        <div className="p-6 space-y-6">
-          {/* Description */}
-          <p className="text-zinc-300 leading-relaxed">{projet.description}</p>
+        {/* Corps modal */}
+        <div className="p-6 space-y-8">
+          <p className="text-zinc-300 text-base leading-relaxed">{projet.description}</p>
 
-          {/* Grid 2col */}
-          <div className="grid sm:grid-cols-2 gap-4">
-            {/* Contexte */}
-            <div className="space-y-2">
-              <h4 className="text-xs font-bold uppercase tracking-wider text-zinc-500 flex items-center gap-1.5">
-                <Eye size={12} /> Contexte
-              </h4>
+          {/* Contexte + Problématique */}
+          <div className="grid sm:grid-cols-2 gap-5">
+            <div>
+              <p className="text-xs text-zinc-600 uppercase tracking-widest font-semibold flex items-center gap-1.5 mb-3">
+                <Eye size={11} /> Contexte
+              </p>
               <p className="text-zinc-400 text-sm leading-relaxed">{projet.contexte}</p>
             </div>
-
-            {/* Problématique */}
-            <div className="space-y-2">
-              <h4 className="text-xs font-bold uppercase tracking-wider text-zinc-500 flex items-center gap-1.5">
-                <AlertCircle size={12} /> Problématique
-              </h4>
-              <p className="text-zinc-400 text-sm leading-relaxed italic">{projet.problematique}</p>
+            <div>
+              <p className="text-xs text-zinc-600 uppercase tracking-widest font-semibold flex items-center gap-1.5 mb-3">
+                <AlertCircle size={11} /> Problématique
+              </p>
+              <p className="text-zinc-300 text-sm leading-relaxed italic">{projet.problematique}</p>
             </div>
           </div>
 
           {/* Rôle */}
           <div>
-            <h4 className="text-xs font-bold uppercase tracking-wider text-zinc-500 mb-2 flex items-center gap-1.5">
-              <Target size={12} /> Mon rôle
-            </h4>
+            <p className="text-xs text-zinc-600 uppercase tracking-widest font-semibold mb-2">Mon rôle</p>
             <p className="text-zinc-400 text-sm leading-relaxed">{projet.role}</p>
-          </div>
-
-          {/* Objectifs */}
-          <div>
-            <h4 className="text-xs font-bold uppercase tracking-wider text-zinc-500 mb-3 flex items-center gap-1.5">
-              <Target size={12} /> Objectifs
-            </h4>
-            <ul className="space-y-1.5">
-              {projet.objectifs.map((obj, i) => (
-                <li key={i} className="flex items-start gap-2 text-sm text-zinc-400">
-                  <ChevronRight size={13} className="mt-0.5 shrink-0" style={{ color }} />
-                  {obj}
-                </li>
-              ))}
-            </ul>
           </div>
 
           {/* Actions réalisées */}
           <div>
-            <h4 className="text-xs font-bold uppercase tracking-wider text-zinc-500 mb-3 flex items-center gap-1.5">
-              <BookOpen size={12} /> Actions réalisées
-            </h4>
-            <ul className="space-y-1.5">
-              {projet.actionsRealisees.map((action, i) => (
-                <li key={i} className="flex items-start gap-2 text-sm text-zinc-400">
-                  <div className="w-1.5 h-1.5 rounded-full mt-1.5 shrink-0" style={{ background: color }} />
-                  {action}
+            <p className="text-xs text-zinc-600 uppercase tracking-widest font-semibold flex items-center gap-1.5 mb-3">
+              <BookOpen size={11} /> Actions réalisées
+            </p>
+            <ul className="space-y-2">
+              {projet.actionsRealisees.map((a, i) => (
+                <li key={i} className="flex items-start gap-3 text-sm text-zinc-400">
+                  <ChevronRight size={13} className="mt-0.5 shrink-0 text-zinc-600" />
+                  {a}
                 </li>
               ))}
             </ul>
@@ -151,86 +97,64 @@ const ProjetModal: FC<{ projet: Projet; onClose: () => void }> = ({ projet, onCl
 
           {/* Outils */}
           <div>
-            <h4 className="text-xs font-bold uppercase tracking-wider text-zinc-500 mb-3 flex items-center gap-1.5">
-              <Wrench size={12} /> Outils & méthodes
-            </h4>
-            <div className="flex flex-wrap gap-1.5">
-              {projet.outils.map((outil) => (
-                <Badge key={outil} variant="default" size="sm">{outil}</Badge>
+            <p className="text-xs text-zinc-600 uppercase tracking-widest font-semibold flex items-center gap-1.5 mb-3">
+              <Wrench size={11} /> Outils & méthodes
+            </p>
+            <div className="flex flex-wrap gap-2">
+              {projet.outils.map(o => (
+                <span key={o} className="text-xs text-zinc-400 border border-white/8 rounded-full px-3 py-1">{o}</span>
               ))}
             </div>
           </div>
 
-          {/* Compétences BUT liées */}
+          {/* Compétences BUT */}
           <div>
-            <h4 className="text-xs font-bold uppercase tracking-wider text-zinc-500 mb-3">
-              Compétences BUT mobilisées
-            </h4>
+            <p className="text-xs text-zinc-600 uppercase tracking-widest font-semibold mb-3">Compétences BUT mobilisées</p>
             <div className="flex flex-wrap gap-2">
-              {compLiees.map((comp) => comp && (
-                <div
+              {compLiees.map(comp => comp && (
+                <span
                   key={comp.id}
-                  className="flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium border"
-                  style={{
-                    color: comp.couleurAccent,
-                    borderColor: `${comp.couleurAccent}30`,
-                    background: `${comp.couleurAccent}10`,
-                  }}
+                  className="text-xs font-medium px-3 py-1.5 rounded-full border"
+                  style={{ color: comp.couleurAccent, borderColor: `${comp.couleurAccent}30`, background: `${comp.couleurAccent}10` }}
                 >
                   {comp.titre}
-                </div>
+                </span>
               ))}
             </div>
           </div>
 
-          {/* Preuves / Traces */}
+          {/* Preuves */}
           <div>
-            <h4 className="text-xs font-bold uppercase tracking-wider text-zinc-500 mb-3">
-              Preuves & Traces
-            </h4>
+            <p className="text-xs text-zinc-600 uppercase tracking-widest font-semibold mb-3">Preuves & traces</p>
             <div className="space-y-2">
-              {projet.preuves.map((preuve, i) => (
-                <PlaceholderZone
-                  key={i}
-                  label={preuve.libelle}
-                  type={preuve.type.toUpperCase()}
-                  compact
-                />
+              {projet.preuves.map((p, i) => (
+                <PlaceholderZone key={i} label={p.libelle} type={p.type.toUpperCase()} compact />
               ))}
             </div>
           </div>
 
           {/* Résultats */}
-          <div
-            className="rounded-xl p-4"
-            style={{ background: `${color}08`, borderLeft: `3px solid ${color}` }}
-          >
-            <h4 className="text-xs font-bold uppercase tracking-wider mb-2" style={{ color }}>
-              Résultats
-            </h4>
+          <div className="p-5 rounded-xl border-l-2 border-blue-500 bg-blue-500/5">
+            <p className="text-xs text-blue-400 uppercase tracking-widest font-semibold mb-2">Résultats</p>
             <p className="text-zinc-400 text-sm leading-relaxed">{projet.resultats}</p>
           </div>
 
           {/* Apprentissages */}
           <div>
-            <h4 className="text-xs font-bold uppercase tracking-wider text-zinc-500 mb-3">
-              Ce que j'ai appris
-            </h4>
-            <ul className="space-y-1.5">
-              {projet.apprentissages.map((app, i) => (
+            <p className="text-xs text-zinc-600 uppercase tracking-widest font-semibold mb-3">Ce que j'ai appris</p>
+            <ul className="space-y-2">
+              {projet.apprentissages.map((a, i) => (
                 <li key={i} className="flex items-start gap-2 text-sm text-zinc-400">
                   <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 mt-1.5 shrink-0" />
-                  {app}
+                  {a}
                 </li>
               ))}
             </ul>
           </div>
 
           {/* Analyse réflexive */}
-          <div className="rounded-xl p-4 bg-white/4 border border-white/8">
-            <h4 className="text-xs font-bold uppercase tracking-wider text-zinc-400 mb-2">
-              Analyse réflexive
-            </h4>
+          <div className="p-5 rounded-xl bg-white/3 border border-white/7">
+            <p className="text-xs text-zinc-500 uppercase tracking-widest font-semibold mb-2">Analyse réflexive</p>
             <p className="text-zinc-400 text-sm leading-relaxed">{projet.analyseReflexive}</p>
           </div>
         </div>
@@ -239,138 +163,164 @@ const ProjetModal: FC<{ projet: Projet; onClose: () => void }> = ({ projet, onCl
   );
 };
 
-// ── Carte projet (résumé) ────────────────────────────────────
-const ProjetCard: FC<{ projet: Projet; onClick: () => void }> = ({ projet, onClick }) => {
-  const Icon = iconMap[projet.icone] || Globe;
-  const color = anneeColors[projet.annee];
+// ── Ligne SAÉ (style liste numérotée) ──────────────────────────
+const ProjetRow: FC<{ projet: Projet; index: number; onClick: () => void }> = ({ projet, index, onClick }) => {
+  const ac = anneeColors[projet.annee];
+  const compLiees = projet.competencesLiees.map(id => competences.find(c => c.id === id)).filter(Boolean);
+  const num = String(index + 1).padStart(2, '0');
 
   return (
-    <motion.button
-      variants={fadeInUp}
-      onClick={onClick}
-      className="glass-card rounded-2xl p-5 text-left w-full group hover:bg-white/7 transition-all duration-300 gradient-border border border-transparent hover:border-white/10"
-      style={{ borderColor: `${color}15` }}
-    >
-      {/* Header card */}
-      <div className="flex items-start justify-between gap-3 mb-4">
-        <div
-          className="w-11 h-11 rounded-xl flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform"
-          style={{ background: `${color}15` }}
-        >
-          <Icon size={20} style={{ color }} />
+    <motion.div variants={fadeInUp}>
+      <button
+        onClick={onClick}
+        className="w-full text-left group py-6 sm:py-7 border-b border-white/6 hover:border-white/12 transition-all duration-300 flex items-start gap-5 sm:gap-8"
+      >
+        {/* Numéro */}
+        <span className="sae-number pt-1 w-6 shrink-0 group-hover:text-zinc-500 transition-colors">{num}</span>
+
+        {/* Contenu principal */}
+        <div className="flex-1 min-w-0">
+          <div className="flex flex-wrap items-center gap-2 mb-2">
+            <span className={`tag ${ac.text} ${ac.bg} ${ac.border}`}>{projet.annee}</span>
+            <span className="text-xs text-zinc-600">{projet.categorie}</span>
+          </div>
+
+          <h3 className="font-display text-white font-semibold text-lg sm:text-xl leading-tight mb-2 group-hover:text-blue-100 transition-colors">
+            {projet.titre}
+          </h3>
+
+          <p className="text-zinc-500 text-sm leading-relaxed line-clamp-2 mb-3">{projet.description}</p>
+
+          {/* Compétences chips */}
+          <div className="flex flex-wrap gap-1.5">
+            {compLiees.map(comp => comp && (
+              <span
+                key={comp.id}
+                className="text-xs px-2.5 py-0.5 rounded-full border"
+                style={{ color: `${comp.couleurAccent}cc`, borderColor: `${comp.couleurAccent}20`, background: `${comp.couleurAccent}08` }}
+              >
+                {comp.titre}
+              </span>
+            ))}
+          </div>
         </div>
-        <div className="flex items-center gap-2">
-          <Badge variant={anneeVariants[projet.annee]} size="sm">{projet.annee}</Badge>
+
+        {/* Flèche */}
+        <div className="shrink-0 pt-1">
+          <div className="w-9 h-9 rounded-full border border-white/10 flex items-center justify-center group-hover:border-blue-500/40 group-hover:bg-blue-500/10 transition-all duration-300">
+            <ArrowUpRight size={15} className="text-zinc-600 group-hover:text-blue-400 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-300" />
+          </div>
         </div>
-      </div>
-
-      <h3 className="font-display text-white font-bold text-sm mb-1 leading-tight group-hover:text-blue-100 transition-colors">
-        {projet.titre}
-      </h3>
-      <p className="text-xs mb-3" style={{ color: `${color}cc` }}>{projet.categorie}</p>
-      <p className="text-zinc-500 text-xs leading-relaxed line-clamp-3 mb-4">{projet.description}</p>
-
-      {/* Compétences */}
-      <div className="flex flex-wrap gap-1.5 mb-4">
-        {projet.competencesLiees.map((compId) => {
-          const comp = competences.find((c) => c.id === compId);
-          if (!comp) return null;
-          return (
-            <span
-              key={compId}
-              className="text-xs px-2 py-0.5 rounded-full border"
-              style={{
-                color: comp.couleurAccent,
-                borderColor: `${comp.couleurAccent}25`,
-                background: `${comp.couleurAccent}10`,
-              }}
-            >
-              {comp.titre}
-            </span>
-          );
-        })}
-      </div>
-
-      {/* CTA */}
-      <div className="flex items-center gap-1 text-xs font-semibold" style={{ color }}>
-        Voir l'étude de cas <ChevronRight size={13} className="group-hover:translate-x-1 transition-transform" />
-      </div>
-    </motion.button>
+      </button>
+    </motion.div>
   );
 };
 
-// ── Section principale ───────────────────────────────────────
+// ── Section principale ──────────────────────────────────────────
 const ProjetsSection: FC = () => {
-  const [selectedProjet, setSelectedProjet] = useState<Projet | null>(null);
+  const [selected, setSelected] = useState<Projet | null>(null);
   const [filter, setFilter] = useState<string>('all');
 
   const filters = [
-    { id: 'all', label: 'Tous les projets' },
-    { id: 'BUT1', label: 'BUT1' },
-    { id: 'BUT2', label: 'BUT2' },
-    { id: 'BUT3', label: 'BUT3' },
+    { id: 'all', label: 'Tous' },
+    { id: 'BUT1', label: 'BUT 1' },
+    { id: 'BUT2', label: 'BUT 2' },
+    { id: 'BUT3', label: 'BUT 3' },
   ];
 
-  const filtered = filter === 'all' ? projets : projets.filter((p) => p.annee === filter);
+  const filtered = filter === 'all' ? projets : projets.filter(p => p.annee === filter);
 
   return (
-    <section id="projets" className="py-24 bg-dark-800 relative overflow-hidden">
-      <div className="absolute bottom-0 right-0 w-96 h-96 bg-cyan-500/5 rounded-full blur-3xl pointer-events-none" />
+    <section id="projets" className="py-24 sm:py-32 bg-[#0a0a14] relative">
+      <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-white/7 to-transparent" />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="mb-14 flex justify-center">
-          <SectionTitle
-            tag="SAÉ & Projets"
-            title="Études de cas "
-            highlight="professionnels"
-            subtitle="7 projets détaillés, de BUT1 à BUT3 — contexte, problématique, rôle, actions, preuves, résultats et analyse réflexive."
-          />
-        </div>
+      <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16">
 
-        {/* Filtres */}
-        <div className="flex justify-center gap-2 mb-10 flex-wrap">
-          {filters.map((f) => (
-            <button
-              key={f.id}
-              onClick={() => setFilter(f.id)}
-              className={`px-4 py-2 rounded-xl text-sm font-medium transition-all duration-200 ${
-                filter === f.id
-                  ? 'bg-blue-500 text-white shadow-lg shadow-blue-500/20'
-                  : 'bg-white/5 text-zinc-400 hover:text-white hover:bg-white/10 border border-white/8'
-              }`}
-            >
-              {f.label}
-            </button>
-          ))}
-        </div>
-
-        {/* Grid projets */}
+        {/* Header section */}
         <motion.div
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4"
-          variants={staggerContainer}
+          className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-12 sm:mb-16"
+          variants={fadeInUp}
           initial="hidden"
           whileInView="visible"
           viewport={viewportConfig}
-          key={filter}
         >
-          {filtered.map((projet) => (
-            <ProjetCard
-              key={projet.id}
-              projet={projet}
-              onClick={() => setSelectedProjet(projet)}
-            />
-          ))}
+          <div>
+            <p className="text-xs text-zinc-600 tracking-[0.2em] uppercase font-medium mb-4">03 — SAÉ & Projets</p>
+            <h2 className="display-title text-4xl sm:text-5xl text-white">
+              Études de cas
+            </h2>
+            <p className="text-zinc-500 text-base mt-3 max-w-lg">
+              7 situations d'apprentissage et d'évaluation de BUT1 à BUT3 — chaque projet est une démonstration concrète de compétences.
+            </p>
+          </div>
+
+          {/* Filtres */}
+          <div className="flex items-center gap-2 bg-white/4 border border-white/8 rounded-full p-1">
+            {filters.map(f => (
+              <button
+                key={f.id}
+                onClick={() => setFilter(f.id)}
+                className={`px-4 py-1.5 rounded-full text-xs font-semibold transition-all duration-200 ${
+                  filter === f.id
+                    ? 'bg-white text-black'
+                    : 'text-zinc-400 hover:text-white'
+                }`}
+              >
+                {f.label}
+              </button>
+            ))}
+          </div>
+        </motion.div>
+
+        {/* Liste SAÉ */}
+        <div>
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={filter}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+            >
+              {/* En-tête colonnes */}
+              <div className="flex items-center gap-5 sm:gap-8 pb-3 border-b border-white/6">
+                <span className="w-6 shrink-0" />
+                <div className="flex-1 flex items-center gap-8">
+                  <span className="text-xs text-zinc-700 uppercase tracking-widest">Projet</span>
+                </div>
+                <div className="w-9 shrink-0" />
+              </div>
+
+              {filtered.map((projet) => (
+                <ProjetRow
+                  key={projet.id}
+                  projet={projet}
+                  index={projets.indexOf(projet)}
+                  onClick={() => setSelected(projet)}
+                />
+              ))}
+            </motion.div>
+          </AnimatePresence>
+        </div>
+
+        {/* Ajout preuve CTA */}
+        <motion.div
+          className="mt-10 flex items-center gap-3 text-sm text-zinc-600"
+          variants={fadeInUp}
+          initial="hidden"
+          whileInView="visible"
+          viewport={viewportConfig}
+        >
+          <Plus size={14} />
+          <span>
+            Les zones marquées <span className="text-blue-500">Ajouter ici</span> sont à compléter avec vos preuves réelles dans <code className="text-xs bg-white/6 px-1.5 py-0.5 rounded">src/data/projets.ts</code>
+          </span>
         </motion.div>
       </div>
 
       {/* Modal */}
       <AnimatePresence>
-        {selectedProjet && (
-          <ProjetModal
-            projet={selectedProjet}
-            onClose={() => setSelectedProjet(null)}
-          />
-        )}
+        {selected && <ProjetModal projet={selected} onClose={() => setSelected(null)} />}
       </AnimatePresence>
     </section>
   );
