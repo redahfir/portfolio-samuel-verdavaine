@@ -44,7 +44,7 @@ Chaque SAÉ, chaque projet, chaque situation professionnelle a été pour moi un
     { label: 'SAÉ professionnelles', valeur: '7', icone: 'FolderOpen' },
     { label: 'Compétences BUT maîtrisées', valeur: '5 blocs', icone: 'Award' },
     { label: 'Années de formation', valeur: 'BUT1 → BUT3', icone: 'GraduationCap' },
-    { label: 'Disponible pour un stage', valeur: 'Juin 2026', icone: 'Calendar' },
+    { label: 'Promotion', valeur: '2023 → 2026', icone: 'Calendar' },
   ],
 };
 

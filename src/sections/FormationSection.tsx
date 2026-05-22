@@ -60,7 +60,7 @@ const blocksCompetences = [
 const parcoursBUT = [
   { annee: 'BUT1', label: '1re année', description: 'Fondamentaux du TC — marketing, communication, gestion, premiers projets professionnels.', color: 'bg-blue-500' },
   { annee: 'BUT2', label: '2e année', description: 'Approfondissement — entrepreneuriat, management, événementiel, posture professionnelle.', color: 'bg-cyan-500' },
-  { annee: 'BUT3', label: '3e année', description: 'Spécialisation Business Dev & RC — stratégie avancée, vente complexe, omnicanalité, stage.', color: 'bg-emerald-500' },
+  { annee: 'BUT3', label: '3e année', description: 'Spécialisation Business Dev & RC — stratégie avancée, vente complexe, omnicanalité, projet professionnel.', color: 'bg-emerald-500' },
 ];
 
 const FormationSection: FC = () => {

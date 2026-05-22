@@ -1,13 +1,15 @@
 import { useState, useEffect } from 'react';
 import type { FC } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, Sun, Moon } from 'lucide-react';
 import { navItems } from '../../data/profile';
+import { useTheme } from '../../context/ThemeContext';
 
 const Header: FC = () => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('hero');
+  const { theme, toggleTheme } = useTheme();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -29,18 +31,22 @@ const Header: FC = () => {
 
   const handleNavClick = (href: string) => {
     setMobileOpen(false);
-    const id = href.replace('#', '');
-    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    document.getElementById(href.replace('#', ''))?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
+
+  const headerBg = scrolled
+    ? theme === 'light'
+      ? 'rgba(248,248,253,0.92)'
+      : 'rgba(7,7,15,0.92)'
+    : 'transparent';
 
   return (
     <>
       <motion.header
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-          scrolled
-            ? 'bg-[#07070f]/90 backdrop-blur-xl border-b border-white/6'
-            : 'bg-transparent'
+          scrolled ? 'backdrop-blur-xl border-b border-white/6' : ''
         }`}
+        style={{ backgroundColor: headerBg }}
         initial={{ y: -80, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] }}
@@ -49,10 +55,7 @@ const Header: FC = () => {
           <div className="flex items-center justify-between h-16">
 
             {/* Logo — typographique */}
-            <button
-              onClick={() => handleNavClick('#hero')}
-              className="group flex items-baseline gap-0.5"
-            >
+            <button onClick={() => handleNavClick('#hero')} className="group flex items-baseline gap-0.5">
               <span className="font-display font-bold text-white text-sm tracking-tight">Samuel</span>
               <span className="font-display font-light text-zinc-500 text-sm tracking-tight group-hover:text-zinc-300 transition-colors">
                 &nbsp;Verdavaine
@@ -66,9 +69,7 @@ const Header: FC = () => {
                   key={item.id}
                   onClick={() => handleNavClick(item.href)}
                   className={`relative px-3 py-1.5 text-xs font-medium rounded-lg transition-all duration-200 tracking-wide ${
-                    activeSection === item.id
-                      ? 'text-white'
-                      : 'text-zinc-500 hover:text-zinc-200'
+                    activeSection === item.id ? 'text-white' : 'text-zinc-500 hover:text-zinc-200'
                   }`}
                 >
                   {activeSection === item.id && (
@@ -83,14 +84,33 @@ const Header: FC = () => {
               ))}
             </nav>
 
-            {/* CTA + Mobile toggle */}
-            <div className="flex items-center gap-3">
+            {/* Actions */}
+            <div className="flex items-center gap-2">
+              {/* Theme toggle */}
+              <button
+                onClick={toggleTheme}
+                className="w-9 h-9 rounded-xl border border-white/10 flex items-center justify-center text-zinc-400 hover:text-white hover:border-white/20 transition-all duration-200"
+                aria-label={theme === 'dark' ? 'Passer au thème clair' : 'Passer au thème sombre'}
+              >
+                {theme === 'dark'
+                  ? <Sun size={15} />
+                  : <Moon size={15} />
+                }
+              </button>
+
+              {/* Contact CTA */}
               <button
                 onClick={() => handleNavClick('#contact')}
-                className="hidden sm:inline-flex items-center gap-2 px-4 py-1.5 text-xs font-semibold text-black bg-white hover:bg-zinc-100 rounded-full transition-all duration-200"
+                className={`hidden sm:inline-flex items-center gap-2 px-4 py-1.5 text-xs font-semibold rounded-full transition-all duration-200 ${
+                  theme === 'dark'
+                    ? 'bg-white text-black hover:bg-zinc-100'
+                    : 'bg-zinc-900 text-white hover:bg-zinc-800'
+                }`}
               >
                 Contact
               </button>
+
+              {/* Mobile toggle */}
               <button
                 onClick={() => setMobileOpen(!mobileOpen)}
                 className="lg:hidden w-9 h-9 rounded-xl border border-white/10 flex items-center justify-center text-zinc-400 hover:text-white hover:border-white/20 transition-all"

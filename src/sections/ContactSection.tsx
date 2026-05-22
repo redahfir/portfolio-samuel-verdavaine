@@ -21,7 +21,7 @@ const ContactSection: FC = () => {
             tag="Prise de contact"
             title="Parlons de votre "
             highlight="projet"
-            subtitle="Disponible pour un stage, une alternance ou tout échange professionnel. N'hésitez pas à me contacter."
+            subtitle="Une question, une opportunité ou un échange professionnel ? N'hésitez pas à me contacter."
           />
         </div>
 
@@ -40,7 +40,7 @@ const ContactSection: FC = () => {
               </h3>
               <p className="text-zinc-400 text-sm leading-relaxed">
                 Étudiant en BUT TC3 parcours Business Développement & Management de la Relation Client.
-                En recherche de stage de fin d'études (juin — août 2026).
+                Disponible pour tout échange professionnel ou opportunité.
               </p>
             </motion.div>
 
@@ -154,7 +154,7 @@ const ContactSection: FC = () => {
                   <label className="text-zinc-400 text-xs font-medium">Objet</label>
                   <input
                     type="text"
-                    placeholder="Stage BUT TC3 / Opportunité / Échange"
+                    placeholder="Opportunité / Échange professionnel / Question"
                     className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white placeholder:text-zinc-600 focus:outline-none focus:border-blue-500/40 focus:bg-white/7 transition-all"
                     readOnly
                     onFocus={(e) => e.target.removeAttribute('readonly')}
@@ -183,10 +183,10 @@ const ContactSection: FC = () => {
 
             {/* Disponibilité */}
             <div className="rounded-2xl p-4 bg-emerald-500/8 border border-emerald-500/20 flex items-center gap-3">
-              <div className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse shrink-0" />
+              <div className="w-2.5 h-2.5 rounded-full bg-blue-400 animate-pulse shrink-0" />
               <div>
-                <p className="text-emerald-300 text-sm font-semibold">Disponible pour un stage</p>
-                <p className="text-emerald-400/70 text-xs">Juin — Août 2026 · Valenciennes et alentours</p>
+                <p className="text-blue-300 text-sm font-semibold">Ouvert aux opportunités</p>
+                <p className="text-blue-400/70 text-xs">Valenciennes et alentours · BUT TC3 2025/2026</p>
               </div>
             </div>
           </motion.div>

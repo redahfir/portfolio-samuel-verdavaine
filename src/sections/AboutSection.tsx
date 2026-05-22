@@ -46,6 +46,7 @@ const AboutSection: FC = () => {
               "Étudiant en BUT TC3, je conjugue analyse de marché, développement commercial et management de la relation client pour créer de la valeur là où ça compte."
             </blockquote>
 
+
             <div className="space-y-4 text-zinc-400 text-[15px] leading-relaxed mb-10">
               {profile.bio.split('\n\n').map((para, i) => (
                 <p key={i}>{para}</p>
@@ -58,7 +59,7 @@ const AboutSection: FC = () => {
                 { icon: GraduationCap, label: 'Formation', value: 'BUT TC Valenciennes' },
                 { icon: Calendar, label: 'Promotion', value: '2023 → 2026' },
                 { icon: MapPin, label: 'Localisation', value: 'Valenciennes, Nord' },
-                { icon: Calendar, label: 'Stage', value: 'Disponible juin 2026' },
+                { icon: GraduationCap, label: 'Parcours', value: 'P3 — Business Dev' },
               ].map(({ icon: Icon, label, value }) => (
                 <div key={label} className="p-4 rounded-xl border border-white/7 bg-white/2">
                   <div className="flex items-center gap-2 mb-1.5">
@@ -136,7 +137,7 @@ const AboutSection: FC = () => {
                 {[
                   { annee: 'BUT1 — 2023/24', label: 'Fondamentaux', desc: 'Marketing, communication, gestion, premiers projets professionnels.' },
                   { annee: 'BUT2 — 2024/25', label: 'Approfondissement', desc: 'Entrepreneuriat, management, événementiel, posture commerciale.' },
-                  { annee: 'BUT3 — 2025/26', label: 'Spécialisation P3', desc: 'Business Développement & Management de la Relation Client — vente complexe, omnicanalité, stage.' },
+                  { annee: 'BUT3 — 2025/26', label: 'Spécialisation P3', desc: 'Business Développement & Management de la Relation Client — vente complexe, omnicanalité, projet professionnel.' },
                 ].map((p, i) => (
                   <div key={p.annee} className="flex gap-4 py-5 border-b border-white/5 last:border-0">
                     <div className="flex flex-col items-center gap-1 pt-1">

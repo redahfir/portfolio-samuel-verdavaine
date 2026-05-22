@@ -2,8 +2,10 @@ import type { FC } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowDown, ArrowUpRight, MapPin } from 'lucide-react';
 import { profile } from '../data/profile';
+import { useTheme } from '../context/ThemeContext';
 
 const HeroSection: FC = () => {
+  const { theme } = useTheme();
   const scroll = (id: string) =>
     document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
 
@@ -30,8 +32,8 @@ const HeroSection: FC = () => {
           transition={{ duration: 0.6, delay: 0.1 }}
         >
           <div className="flex items-center gap-2 text-xs text-zinc-500 font-medium tracking-widest uppercase">
-            <div className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse shrink-0" />
-            Disponible — Stage juin 2026
+            <div className="w-1.5 h-1.5 rounded-full bg-blue-400 shrink-0" />
+            Portfolio BUT TC3 · 2025/2026
           </div>
           <div className="flex items-center gap-1.5 text-xs text-zinc-600">
             <MapPin size={11} className="shrink-0" />
@@ -47,12 +49,12 @@ const HeroSection: FC = () => {
             transition={{ duration: 0.8, delay: 0.2, ease: [0.22, 1, 0.36, 1] as [number,number,number,number] }}
           >
             <p className="text-xs text-zinc-500 tracking-[0.25em] uppercase font-medium mb-4 sm:mb-6">
-              Portfolio BUT TC3 — 2025 / 2026
+              Samuel Verdavaine
             </p>
             <h1 className="display-title text-[clamp(3.5rem,10vw,9rem)] text-white leading-[0.9] mb-6 sm:mb-8">
-              Samuel<br />
-              <span className="text-transparent [-webkit-text-stroke:2px_rgba(255,255,255,0.18)]">
-                Verdavaine
+              Business<br />
+              <span className="hero-outline text-transparent [-webkit-text-stroke:2px_rgba(255,255,255,0.18)]">
+                Développeur
               </span>
             </h1>
           </motion.div>
@@ -66,9 +68,6 @@ const HeroSection: FC = () => {
             {/* Accroche */}
             <div className="max-w-xl">
               <p className="text-lg sm:text-xl text-zinc-300 leading-relaxed font-light mb-1">
-                Business Développement
-              </p>
-              <p className="text-lg sm:text-xl text-zinc-300 leading-relaxed font-light">
                 & Management de la Relation Client
               </p>
               <p className="text-sm text-zinc-600 mt-3 leading-relaxed max-w-sm">
@@ -80,7 +79,11 @@ const HeroSection: FC = () => {
             <div className="flex flex-col sm:items-end gap-3 shrink-0">
               <button
                 onClick={() => scroll('projets')}
-                className="group flex items-center gap-2 px-6 py-3 bg-white text-black font-semibold text-sm rounded-full hover:bg-zinc-100 transition-all duration-200"
+                className={`group flex items-center gap-2 px-6 py-3 font-semibold text-sm rounded-full hover:opacity-90 transition-all duration-200 ${
+                  theme === 'dark'
+                    ? 'bg-white text-black'
+                    : 'bg-zinc-900 text-white'
+                }`}
               >
                 Voir mes SAÉ
                 <ArrowUpRight size={15} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
