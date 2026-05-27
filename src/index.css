@@ -324,3 +324,24 @@ html[data-theme="light"] .hover\:text-blue-300:hover  { color: #2563eb !importan
 html[data-theme="light"] .hover\:text-blue-400:hover  { color: #1d4ed8 !important; }
 html[data-theme="light"] .group:hover .group-hover\:text-blue-400   { color: #1d4ed8 !important; }
 html[data-theme="light"] .group:hover .group-hover\:text-emerald-400 { color: #047857 !important; }
+
+/* ══════════════════════════════════════════════════════════════
+   EXCEPTIONS text-white — fonds explicitement sombres/colorés
+   Spécificité 0,3,1 > 0,2,1 de la règle générale .text-white
+   ══════════════════════════════════════════════════════════════ */
+
+/* Boutons fond sombre — même élément (Hero, Header) */
+html[data-theme="light"] .bg-zinc-900.text-white  { color: #f9fafb !important; }
+html[data-theme="light"] .bg-zinc-800.text-white  { color: #f9fafb !important; }
+
+/* Boutons fond coloré — même élément (Contact: email, CV, Button.tsx) */
+html[data-theme="light"] .bg-blue-500.text-white  { color: #ffffff !important; }
+html[data-theme="light"] .bg-blue-600.text-white  { color: #ffffff !important; }
+html[data-theme="light"] .from-blue-500.text-white { color: #ffffff !important; }
+html[data-theme="light"] .from-blue-600.text-white { color: #ffffff !important; }
+
+/* Conteneurs colorés → texte blanc enfant (Timeline badges d'année) */
+html[data-theme="light"] .bg-blue-500 .text-white,
+html[data-theme="light"] .bg-cyan-500 .text-white,
+html[data-theme="light"] .bg-emerald-500 .text-white,
+html[data-theme="light"] .bg-zinc-900 .text-white  { color: #ffffff !important; }
