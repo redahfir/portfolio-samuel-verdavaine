@@ -91,7 +91,7 @@ export const projets: Projet[] = [
         type: 'affiche',
         libelle: 'Supports de communication Valen\'Burger — logo, affiche, mockup Instagram',
         fournie: true,
-        url: '/preuves/Preuve_SAE2_Com_Challenge.jpg',
+        url: '/preuves/Preuve_SAE2_Com_Challenge.png',
       },
     ],
     resultats:
@@ -192,7 +192,7 @@ export const projets: Projet[] = [
         type: 'presentation',
         libelle: 'Pitch deck Campus Box — concept, valeur et modèle économique',
         fournie: true,
-        url: '/preuves/Preuve_SAE4_Entrepreneuriat.jpg',
+        url: '/preuves/Affiche_SAE4_Entrepreneuriat.png',
       },
     ],
     resultats:

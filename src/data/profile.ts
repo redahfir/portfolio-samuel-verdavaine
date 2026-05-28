@@ -56,6 +56,5 @@ export const navItems = [
   { id: 'timeline', label: 'Parcours', href: '#timeline' },
   { id: 'projets', label: 'Projets', href: '#projets' },
   { id: 'reflexif', label: 'Réflexif', href: '#reflexif' },
-  { id: 'stage', label: 'Stage', href: '#stage' },
-  { id: 'contact', label: 'Contact', href: '#contact' },
+{ id: 'contact', label: 'Contact', href: '#contact' },
 ];

@@ -3,7 +3,8 @@ import type { FC } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   TrendingUp, Handshake, Megaphone, Rocket, Heart,
-  ChevronDown, CheckCircle2, Clock, ArrowUpRight
+  ChevronDown, CheckCircle2, Clock, ArrowUpRight,
+  FileText, ExternalLink, X, Image
 } from 'lucide-react';
 import React from 'react';
 import { competences } from '../data/competences';
@@ -11,7 +12,7 @@ import { projets } from '../data/projets';
 import { fadeInUp, viewportConfig } from '../utils/animations';
 import { accentColor } from '../utils/colors';
 import { useTheme } from '../context/ThemeContext';
-import type { Competence, NiveauMaitrise } from '../types';
+import type { Competence, NiveauMaitrise, Projet } from '../types';
 
 const iconMap: Record<string, FC<{ size?: number; className?: string; style?: React.CSSProperties }>> = {
   TrendingUp, Handshake, Megaphone, Rocket, Heart,
@@ -36,9 +37,90 @@ const MaitriseBadge: FC<{ niveau: NiveauMaitrise }> = ({ niveau }) => {
   );
 };
 
+// ── Carte preuve SAÉ ───────────────────────────────────────────
+const ProjetPreuveCard: FC<{ projet: Projet; onClose: () => void }> = ({ projet, onClose }) => {
+  const preuve = projet.preuves.find(p => p.fournie && p.url);
+  const isImage = preuve?.url?.match(/\.(png|jpg|jpeg|gif|webp)$/i);
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: -8, height: 0 }}
+      animate={{ opacity: 1, y: 0, height: 'auto' }}
+      exit={{ opacity: 0, y: -8, height: 0 }}
+      transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+      className="overflow-hidden"
+    >
+      <div className="mb-4 rounded-xl border border-emerald-500/20 bg-emerald-500/5 overflow-hidden">
+        {/* Header carte */}
+        <div className="flex items-start justify-between gap-3 p-4 border-b border-emerald-500/10">
+          <div>
+            <p className="text-xs text-emerald-500 uppercase tracking-wider font-semibold mb-0.5">Preuve SAÉ</p>
+            <p className="text-white text-sm font-medium">{projet.titre}</p>
+            <p className="text-zinc-500 text-xs mt-0.5">{projet.annee} — {projet.categorie}</p>
+          </div>
+          <button
+            onClick={onClose}
+            className="shrink-0 w-6 h-6 rounded-lg flex items-center justify-center text-zinc-500 hover:text-white hover:bg-white/10 transition-all"
+          >
+            <X size={12} />
+          </button>
+        </div>
+
+        {/* Aperçu image */}
+        {preuve && isImage && (
+          <div className="relative group">
+            <img
+              src={preuve.url}
+              alt={preuve.libelle}
+              className="w-full max-h-64 object-contain bg-black/20"
+            />
+            <a
+              href={preuve.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="absolute inset-0 flex items-center justify-center bg-black/0 group-hover:bg-black/40 transition-all duration-200 opacity-0 group-hover:opacity-100"
+            >
+              <span className="flex items-center gap-1.5 text-white text-xs font-semibold bg-black/60 px-3 py-1.5 rounded-full">
+                <ExternalLink size={11} /> Ouvrir en grand
+              </span>
+            </a>
+          </div>
+        )}
+
+        {/* Lien document */}
+        {preuve && (
+          <a
+            href={preuve.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-3 p-4 hover:bg-emerald-500/8 transition-all duration-200 group"
+          >
+            <div className="w-9 h-9 rounded-lg bg-emerald-500/15 flex items-center justify-center shrink-0">
+              {isImage ? <Image size={16} className="text-emerald-400" /> : <FileText size={16} className="text-emerald-400" />}
+            </div>
+            <div className="flex-1 min-w-0">
+              <p className="text-emerald-300 text-xs font-semibold">{preuve.libelle}</p>
+              <p className="text-zinc-500 text-xs mt-0.5">{isImage ? 'Image — cliquer pour agrandir' : 'Document PDF — cliquer pour ouvrir'}</p>
+            </div>
+            <ExternalLink size={13} className="text-emerald-500/50 group-hover:text-emerald-400 transition-colors shrink-0" />
+          </a>
+        )}
+
+        {/* Pas de preuve */}
+        {!preuve && (
+          <div className="p-4 text-center">
+            <p className="text-zinc-600 text-xs">Aucune preuve disponible pour cette SAÉ.</p>
+          </div>
+        )}
+      </div>
+    </motion.div>
+  );
+};
+
 // ── Ligne compétence ───────────────────────────────────────────
 const CompetenceRow: FC<{ competence: Competence; index: number }> = ({ competence, index }) => {
   const [open, setOpen] = useState(false);
+  const [selectedProjet, setSelectedProjet] = useState<Projet | null>(null);
   const { theme } = useTheme();
   const accent = accentColor(competence, theme);
   const Icon = iconMap[competence.icone] || TrendingUp;
@@ -47,10 +129,14 @@ const CompetenceRow: FC<{ competence: Competence; index: number }> = ({ competen
   const acMaitrise = competence.apprentissagesCritiques.filter(a => a.maitrise === 'maitrise').length;
   const acTotal = competence.apprentissagesCritiques.length;
 
+  const handleProjetClick = (projet: Projet) => {
+    setSelectedProjet(prev => prev?.id === projet.id ? null : projet);
+  };
+
   return (
     <motion.div variants={fadeInUp} className="border-b border-white/6 last:border-0">
       <button
-        onClick={() => setOpen(!open)}
+        onClick={() => { setOpen(!open); if (open) setSelectedProjet(null); }}
         className="w-full text-left group py-6 sm:py-7 flex items-start gap-5 sm:gap-8 transition-all duration-300"
       >
         {/* Numéro */}
@@ -73,7 +159,6 @@ const CompetenceRow: FC<{ competence: Competence; index: number }> = ({ competen
 
           <p className="text-zinc-500 text-sm leading-relaxed mb-3 line-clamp-2">{competence.description}</p>
 
-          {/* Savoir-faire preview — masqué sur mobile */}
           <div className="hidden sm:flex flex-wrap gap-2">
             {competence.savoirFaire.slice(0, 3).map((sf, i) => (
               <span key={i} className="text-xs text-zinc-500 border border-white/8 rounded-full px-2.5 py-0.5">
@@ -128,15 +213,49 @@ const CompetenceRow: FC<{ competence: Competence; index: number }> = ({ competen
 
                 {projetsLies.length > 0 && (
                   <div>
-                    <p className="text-xs text-zinc-600 uppercase tracking-widest font-semibold mb-2">SAÉ mobilisant cette compétence</p>
-                    <div className="space-y-1.5">
-                      {projetsLies.map(p => (
-                        <div key={p.id} className="flex items-center gap-2 text-xs text-zinc-400">
-                          <ArrowUpRight size={11} className="text-zinc-600" />
-                          <span className="text-zinc-600">{p.annee}</span>
-                          <span>{p.titre}</span>
-                        </div>
-                      ))}
+                    <p className="text-xs text-zinc-600 uppercase tracking-widest font-semibold mb-2">
+                      SAÉ mobilisant cette compétence
+                      <span className="ml-1.5 text-zinc-700 normal-case tracking-normal font-normal">— cliquer pour voir la preuve</span>
+                    </p>
+                    <div className="space-y-1">
+                      {projetsLies.map(p => {
+                        const hasProof = p.preuves.some(pr => pr.fournie && pr.url);
+                        const isSelected = selectedProjet?.id === p.id;
+                        return (
+                          <div key={p.id}>
+                            <button
+                              onClick={() => handleProjetClick(p)}
+                              className={`w-full flex items-center gap-2 text-xs px-3 py-2 rounded-lg transition-all duration-200 ${
+                                isSelected
+                                  ? 'bg-emerald-500/10 border border-emerald-500/20 text-emerald-300'
+                                  : hasProof
+                                    ? 'hover:bg-white/5 border border-transparent text-zinc-400 hover:text-white'
+                                    : 'border border-transparent text-zinc-500 cursor-default'
+                              }`}
+                            >
+                              <ArrowUpRight size={11} className={isSelected ? 'text-emerald-400' : 'text-zinc-600'} />
+                              <span className="text-zinc-500 shrink-0">{p.annee}</span>
+                              <span className="flex-1 text-left">{p.titre}</span>
+                              {hasProof && (
+                                <span className={`shrink-0 flex items-center gap-1 ${isSelected ? 'text-emerald-400' : 'text-zinc-600'}`}>
+                                  <FileText size={10} />
+                                  <span className="text-xs">preuve</span>
+                                </span>
+                              )}
+                            </button>
+
+                            {/* Carte preuve inline */}
+                            <AnimatePresence>
+                              {isSelected && (
+                                <ProjetPreuveCard
+                                  projet={p}
+                                  onClose={() => setSelectedProjet(null)}
+                                />
+                              )}
+                            </AnimatePresence>
+                          </div>
+                        );
+                      })}
                     </div>
                   </div>
                 )}

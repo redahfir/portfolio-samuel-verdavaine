@@ -6,7 +6,6 @@ import CompetencesSection from '../sections/CompetencesSection';
 import TimelineSection from '../sections/TimelineSection';
 import ProjetsSection from '../sections/ProjetsSection';
 import ReflexifSection from '../sections/ReflexifSection';
-import StageSection from '../sections/StageSection';
 import ContactSection from '../sections/ContactSection';
 
 const Home: FC = () => {
@@ -19,8 +18,7 @@ const Home: FC = () => {
       <TimelineSection />
       <ProjetsSection />
       <ReflexifSection />
-      <StageSection />
-      <ContactSection />
+<ContactSection />
     </main>
   );
 };
