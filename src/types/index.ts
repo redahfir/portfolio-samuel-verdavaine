@@ -86,6 +86,7 @@ export interface TimelineEntry {
 // --- Tableau réflexif ---
 export interface EntreeReflexive {
   competenceId: CompetenceId;
+  titre?: string;
   situationSelectionnee: string;
   pertinenceChoix: string;
   tracesChoisies: string[];
@@ -94,6 +95,7 @@ export interface EntreeReflexive {
   pertinenceTraces: string;
   bilanApprentissages: string;
   projetId?: string;
+  preuveUrl?: string;
 }
 
 // --- Stage ---

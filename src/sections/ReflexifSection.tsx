@@ -3,10 +3,10 @@ import type { FC } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   TrendingUp, Handshake, Megaphone, Rocket, Heart,
-  ChevronDown, ChevronUp, FileText, CheckSquare, Layers, BookOpen
+  ChevronDown, ChevronUp, FileText, CheckSquare, Layers, BookOpen, ZoomIn
 } from 'lucide-react';
 import SectionTitle from '../components/ui/SectionTitle';
-import PlaceholderZone from '../components/ui/PlaceholderZone';
+import ProofViewer from '../components/ui/ProofViewer';
 import { entreesReflexives } from '../data/reflexif';
 import { competences } from '../data/competences';
 import { fadeInUp, staggerContainer, viewportConfig } from '../utils/animations';
@@ -26,16 +26,18 @@ const compIconMap: Record<string, string> = {
   'relation-client': 'Heart',
 };
 
-const EntreeReflexiveCard: FC<{ entree: EntreeReflexive; index: number }> = ({ entree }) => {
+const EntreeReflexiveCard: FC<{
+  entree: EntreeReflexive;
+  index: number;
+  onOpenViewer: (url: string, label: string) => void;
+}> = ({ entree, onOpenViewer }) => {
   const [expanded, setExpanded] = useState(false);
   const { theme } = useTheme();
   const comp = competences.find((c) => c.id === entree.competenceId);
   if (!comp) return null;
   const accent = accentColor(comp, theme);
   const Icon = iconMap[compIconMap[entree.competenceId]] || TrendingUp;
-
-  // Detect if content is a TODO placeholder
-  const isTodo = (text: string) => text.startsWith('TODO');
+  const displayTitle = entree.titre || comp.titre;
 
   return (
     <motion.div
@@ -56,14 +58,10 @@ const EntreeReflexiveCard: FC<{ entree: EntreeReflexive; index: number }> = ({ e
             <Icon size={20} style={{ color: accent }} />
           </div>
           <div className="flex-1 min-w-0">
-            <div className="flex items-start justify-between gap-3">
-              <div>
-                <h3 className="font-display text-white font-bold text-base">{comp.titre}</h3>
-                <p className="text-xs mt-0.5" style={{ color: accent }}>
-                  {comp.niveauIntitule}
-                </p>
-              </div>
-            </div>
+            <h3 className="font-display text-white font-bold text-base">{displayTitle}</h3>
+            <p className="text-xs mt-0.5" style={{ color: accent }}>
+              {comp.niveauIntitule}
+            </p>
           </div>
         </div>
 
@@ -80,12 +78,24 @@ const EntreeReflexiveCard: FC<{ entree: EntreeReflexive; index: number }> = ({ e
           <p className="text-xs font-bold uppercase tracking-wider text-zinc-500 mb-1">
             Pertinence du choix
           </p>
-          <p className="text-zinc-400 text-sm leading-relaxed">
-            {isTodo(entree.pertinenceChoix) ? (
-              <span className="text-amber-400 italic">{entree.pertinenceChoix}</span>
-            ) : entree.pertinenceChoix}
-          </p>
+          <p className="text-zinc-400 text-sm leading-relaxed">{entree.pertinenceChoix}</p>
         </div>
+
+        {/* Bouton Voir la preuve */}
+        {entree.preuveUrl && (
+          <button
+            onClick={() => onOpenViewer(entree.preuveUrl!, entree.tracesChoisies[0] || displayTitle)}
+            className="mt-4 flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold transition-all duration-200 border"
+            style={{
+              background: `${accent}12`,
+              borderColor: `${accent}35`,
+              color: accent,
+            }}
+          >
+            <ZoomIn size={13} />
+            Voir la preuve
+          </button>
+        )}
       </div>
 
       {/* Expand button */}
@@ -116,7 +126,14 @@ const EntreeReflexiveCard: FC<{ entree: EntreeReflexive; index: number }> = ({ e
                 </h4>
                 <div className="space-y-2">
                   {entree.tracesChoisies.map((trace, i) => (
-                    <PlaceholderZone key={i} label={trace} type="TRACE" compact />
+                    <div
+                      key={i}
+                      className="flex items-center gap-3 p-3 rounded-xl border"
+                      style={{ borderColor: `${accent}20`, background: `${accent}06` }}
+                    >
+                      <FileText size={13} style={{ color: accent }} className="shrink-0" />
+                      <span className="text-zinc-300 text-xs">{trace}</span>
+                    </div>
                   ))}
                 </div>
               </div>
@@ -159,11 +176,7 @@ const EntreeReflexiveCard: FC<{ entree: EntreeReflexive; index: number }> = ({ e
                 <h4 className="text-xs font-bold uppercase tracking-wider mb-2 text-zinc-500">
                   Pertinence des traces
                 </h4>
-                <p className="text-zinc-400 text-sm leading-relaxed">
-                  {isTodo(entree.pertinenceTraces) ? (
-                    <span className="text-amber-400 italic">{entree.pertinenceTraces}</span>
-                  ) : entree.pertinenceTraces}
-                </p>
+                <p className="text-zinc-400 text-sm leading-relaxed">{entree.pertinenceTraces}</p>
               </div>
 
               {/* Bilan */}
@@ -180,11 +193,7 @@ const EntreeReflexiveCard: FC<{ entree: EntreeReflexive; index: number }> = ({ e
                 >
                   <BookOpen size={12} /> Bilan des apprentissages
                 </h4>
-                <p className="text-zinc-400 text-sm leading-relaxed">
-                  {isTodo(entree.bilanApprentissages) ? (
-                    <span className="text-amber-400 italic">{entree.bilanApprentissages}</span>
-                  ) : entree.bilanApprentissages}
-                </p>
+                <p className="text-zinc-400 text-sm leading-relaxed">{entree.bilanApprentissages}</p>
               </div>
             </div>
           </motion.div>
@@ -195,54 +204,79 @@ const EntreeReflexiveCard: FC<{ entree: EntreeReflexive; index: number }> = ({ e
 };
 
 const ReflexifSection: FC = () => {
+  const [viewer, setViewer] = useState<{ url: string; label: string } | null>(null);
+
   return (
-    <section id="reflexif" className="py-24 bg-dark-700 relative overflow-hidden">
-      <div className="absolute top-0 left-0 w-72 h-72 bg-purple-500/5 rounded-full blur-3xl pointer-events-none" />
+    <>
+      <section id="reflexif" className="py-24 bg-dark-700 relative overflow-hidden">
+        <div className="absolute top-0 left-0 w-72 h-72 bg-purple-500/5 rounded-full blur-3xl pointer-events-none" />
 
-      <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16">
-        <div className="mb-14 flex justify-center">
-          <SectionTitle
-            tag="Démarche réflexive"
-            title="Analyse "
-            highlight="réflexive"
-            subtitle="Pour chaque compétence BUT, une situation représentative est analysée : pertinence du choix, traces mobilisées, apprentissages critiques et bilan personnel."
-          />
+        <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16">
+          <div className="mb-14 flex justify-center">
+            <SectionTitle
+              tag="Démarche réflexive"
+              title="Analyse "
+              highlight="réflexive"
+              subtitle="Pour chaque SAÉ, une analyse de la situation choisie : pertinence du choix, traces mobilisées, apprentissages critiques et bilan personnel."
+            />
+          </div>
+
+          {/* Entrées réflexives */}
+          <motion.div
+            className="grid grid-cols-1 lg:grid-cols-2 gap-5"
+            variants={staggerContainer}
+            initial="hidden"
+            whileInView="visible"
+            viewport={viewportConfig}
+          >
+            {entreesReflexives.map((entree, i) => (
+              <EntreeReflexiveCard
+                key={`${entree.competenceId}-${i}`}
+                entree={entree}
+                index={i}
+                onOpenViewer={(url, label) => setViewer({ url, label })}
+              />
+            ))}
+          </motion.div>
+
+          {/* Conclusion réflexive */}
+          <motion.div
+            className="mt-14 rounded-2xl p-8 border border-white/8"
+            style={{ background: 'linear-gradient(135deg, rgba(59,130,246,0.06), rgba(16,185,129,0.04))' }}
+            variants={fadeInUp}
+            initial="hidden"
+            whileInView="visible"
+            viewport={viewportConfig}
+          >
+            <div className="flex items-center gap-2 mb-4">
+              <BookOpen size={16} className="text-blue-400" />
+              <p className="text-xs font-bold uppercase tracking-widest text-blue-400">Conclusion réflexive</p>
+            </div>
+            <h3 className="font-display text-white font-bold text-xl mb-4">
+              Bilan de trois ans de formation
+            </h3>
+            <div className="space-y-3 text-zinc-400 text-sm leading-relaxed">
+              <p>
+                L'ensemble de ces SAÉ m'a permis de mettre en pratique les compétences étudiées en BUT Techniques de Commercialisation. Chaque projet m'a apporté une expérience concrète dans un domaine différent : marketing, communication, gestion, entrepreneuriat, événementiel, omnicanalité et négociation.
+              </p>
+              <p>
+                Ces réalisations montrent ma progression, ma capacité à travailler en équipe et mon évolution vers une posture plus professionnelle. Elles me permettent aussi de mieux valoriser mes compétences à travers des preuves concrètes et visibles dans mon portfolio.
+              </p>
+            </div>
+          </motion.div>
         </div>
+      </section>
 
-        {/* Info banner */}
-        <motion.div
-          className="mb-10 rounded-2xl p-4 bg-amber-500/8 border border-amber-500/20 flex items-start gap-3"
-          variants={fadeInUp}
-          initial="hidden"
-          whileInView="visible"
-          viewport={viewportConfig}
-        >
-          <div className="w-8 h-8 rounded-lg bg-amber-500/15 flex items-center justify-center shrink-0">
-            <FileText size={16} className="text-amber-400" />
-          </div>
-          <div>
-            <p className="text-amber-300 text-sm font-semibold mb-0.5">Tableau réflexif en cours de construction</p>
-            <p className="text-amber-400/70 text-xs leading-relaxed">
-              Les sections marquées TODO sont à compléter avec les informations personnelles et les preuves réelles.
-              Les traces indiquées sont à ajouter en remplaçant les zones de placeholder.
-            </p>
-          </div>
-        </motion.div>
-
-        {/* Entrées réflexives */}
-        <motion.div
-          className="grid grid-cols-1 lg:grid-cols-2 gap-5"
-          variants={staggerContainer}
-          initial="hidden"
-          whileInView="visible"
-          viewport={viewportConfig}
-        >
-          {entreesReflexives.map((entree, i) => (
-            <EntreeReflexiveCard key={entree.competenceId} entree={entree} index={i} />
-          ))}
-        </motion.div>
-      </div>
-    </section>
+      <AnimatePresence>
+        {viewer && (
+          <ProofViewer
+            url={viewer.url}
+            label={viewer.label}
+            onClose={() => setViewer(null)}
+          />
+        )}
+      </AnimatePresence>
+    </>
   );
 };
 

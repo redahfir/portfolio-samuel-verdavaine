@@ -42,7 +42,7 @@ export const projets: Projet[] = [
         type: 'document',
         libelle: 'Rapport d\'analyse du marché du vin — SAÉ BUT1',
         fournie: true,
-        url: '/preuves/Preuve_SAE_Marketing_Analyse_Marche_Vin.pdf',
+        url: '/preuves/Preuve_SAE1_Marketing_Vin.pdf',
       },
     ],
     resultats:
@@ -192,7 +192,7 @@ export const projets: Projet[] = [
         type: 'presentation',
         libelle: 'Pitch deck Campus Box — concept, valeur et modèle économique',
         fournie: true,
-        url: '/preuves/Affiche_SAE4_Entrepreneuriat.png',
+        url: '/preuves/Preuve_SAE4_Entrepreneuriat.png',
       },
     ],
     resultats:

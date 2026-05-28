@@ -31,13 +31,10 @@ Chaque SAÉ, chaque projet, chaque situation professionnelle a été pour moi un
   ],
 
   contact: {
-    // TODO — Compléter avec vos informations personnelles
-    email: 'samuel.verdavaine@etudiant.univ-xxx.fr', // TODO : remplacer
-    linkedin: 'https://linkedin.com/in/samuel-verdavaine', // TODO : remplacer
-    github: 'https://github.com/samuel-verdavaine', // TODO : remplacer
-    telephone: '', // TODO : ajouter si souhaité
+    email: 'verda.samsam@gmail.com',
+    linkedin: 'https://www.linkedin.com/in/samuel-verdavaine-60a68b26b/',
+    telephone: '',
     localisation: 'Valenciennes, France',
-    cv: '/cv-samuel-verdavaine.pdf', // TODO : ajouter le fichier CV dans public/
   },
 
   stats: [
@@ -56,5 +53,5 @@ export const navItems = [
   { id: 'timeline', label: 'Parcours', href: '#timeline' },
   { id: 'projets', label: 'Projets', href: '#projets' },
   { id: 'reflexif', label: 'Réflexif', href: '#reflexif' },
-{ id: 'contact', label: 'Contact', href: '#contact' },
+  { id: 'contact', label: 'Contact', href: '#contact' },
 ];

@@ -1,5 +1,5 @@
 import type { FC } from 'react';
-import { Code2, Briefcase, Mail } from 'lucide-react';
+import { Briefcase, Mail } from 'lucide-react';
 import { profile } from '../../data/profile';
 
 const Footer: FC = () => {
@@ -10,7 +10,6 @@ const Footer: FC = () => {
       <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 py-10">
         <div className="flex flex-col sm:flex-row items-center justify-between gap-6">
 
-          {/* Brand — typographique */}
           <div className="flex flex-col items-center sm:items-start gap-1">
             <div className="flex items-baseline gap-0.5">
               <span className="font-display font-bold text-white text-sm tracking-tight">Samuel</span>
@@ -19,17 +18,7 @@ const Footer: FC = () => {
             <p className="text-zinc-700 text-xs">Portfolio BUT TC3 — 2025/2026</p>
           </div>
 
-          {/* Links */}
           <div className="flex items-center gap-2">
-            <a
-              href={profile.contact.github}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-9 h-9 rounded-xl border border-white/8 flex items-center justify-center text-zinc-500 hover:text-white hover:border-white/20 transition-all duration-200"
-              aria-label="GitHub"
-            >
-              <Code2 size={15} />
-            </a>
             <a
               href={profile.contact.linkedin}
               target="_blank"
@@ -48,7 +37,6 @@ const Footer: FC = () => {
             </a>
           </div>
 
-          {/* Copyright */}
           <p className="text-zinc-700 text-xs text-center sm:text-right">
             © {year} — BUT TC Valenciennes
           </p>

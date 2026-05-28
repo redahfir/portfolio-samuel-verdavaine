@@ -1,17 +1,16 @@
 import type { FC } from 'react';
 import { motion } from 'framer-motion';
 import {
-  Mail, Briefcase, Code2, Download, MapPin,
+  Mail, Briefcase, MapPin,
   ExternalLink, Send, ArrowRight
 } from 'lucide-react';
 import SectionTitle from '../components/ui/SectionTitle';
 import { profile } from '../data/profile';
-import { fadeInUp, fadeInLeft, fadeInRight, staggerContainer, viewportConfig } from '../utils/animations';
+import { fadeInLeft, fadeInRight, staggerContainer, viewportConfig } from '../utils/animations';
 
 const ContactSection: FC = () => {
   return (
     <section id="contact" className="py-24 bg-dark-700 relative overflow-hidden">
-      {/* Background effects */}
       <div className="absolute inset-0 bg-hero-gradient opacity-50 pointer-events-none" />
       <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-96 h-96 bg-blue-500/8 rounded-full blur-3xl pointer-events-none" />
 
@@ -76,22 +75,6 @@ const ContactSection: FC = () => {
                 <ExternalLink size={16} className="text-zinc-600 group-hover:text-blue-400 transition-colors" />
               </a>
 
-              <a
-                href={profile.contact.github}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-4 p-4 glass-card rounded-2xl border border-white/8 hover:border-white/20 hover:bg-white/5 transition-all duration-300 group"
-              >
-                <div className="w-10 h-10 rounded-xl bg-white/8 flex items-center justify-center shrink-0 group-hover:bg-white/15 transition-colors">
-                  <Code2 size={18} className="text-zinc-300" />
-                </div>
-                <div className="flex-1 min-w-0">
-                  <p className="text-zinc-500 text-xs">GitHub</p>
-                  <p className="text-white text-sm font-medium truncate">samuel-verdavaine</p>
-                </div>
-                <ExternalLink size={16} className="text-zinc-600 group-hover:text-zinc-400 transition-colors" />
-              </a>
-
               <div className="flex items-center gap-4 p-4 glass-card rounded-2xl border border-white/8">
                 <div className="w-10 h-10 rounded-xl bg-zinc-500/15 flex items-center justify-center shrink-0">
                   <MapPin size={18} className="text-zinc-400" />
@@ -102,22 +85,9 @@ const ContactSection: FC = () => {
                 </div>
               </div>
             </motion.div>
-
-            {/* CV Download */}
-            <motion.div variants={fadeInUp}>
-              <a
-                href={profile.contact.cv}
-                download
-                className="flex items-center justify-center gap-3 w-full p-4 rounded-2xl bg-gradient-to-r from-blue-500 to-cyan-500 text-white font-semibold hover:from-blue-600 hover:to-cyan-600 transition-all duration-200 shadow-lg shadow-blue-500/25 hover:shadow-blue-500/35 group"
-              >
-                <Download size={18} className="group-hover:animate-bounce" />
-                Télécharger mon CV
-                {/* TODO : Ajouter le fichier cv-samuel-verdavaine.pdf dans le dossier public/ */}
-              </a>
-            </motion.div>
           </motion.div>
 
-          {/* Right — Formulaire (visuel/mailto) */}
+          {/* Right — Formulaire */}
           <motion.div
             className="space-y-4"
             variants={fadeInRight}
