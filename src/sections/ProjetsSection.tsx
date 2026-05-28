@@ -135,7 +135,7 @@ const ProjetModal: FC<{ projet: Projet; onClose: () => void }> = ({ projet, onCl
             <p className="text-xs text-zinc-600 uppercase tracking-widest font-semibold mb-3">Preuves & traces</p>
             <div className="space-y-2">
               {projet.preuves.map((p, i) => (
-                <PlaceholderZone key={i} label={p.libelle} type={p.type.toUpperCase()} compact />
+                <PlaceholderZone key={i} label={p.libelle} type={p.type.toUpperCase()} compact fournie={p.fournie} url={p.url} />
               ))}
             </div>
           </div>
