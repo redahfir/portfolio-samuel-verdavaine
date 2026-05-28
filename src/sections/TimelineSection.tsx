@@ -1,13 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import type { FC } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import {
   BarChart3, Megaphone, Building2, Lightbulb,
-  CalendarCheck, Globe, MessageSquare
+  CalendarCheck, Globe, MessageSquare, ArrowUpRight
 } from 'lucide-react';
 import SectionTitle from '../components/ui/SectionTitle';
 import Badge from '../components/ui/Badge';
+import ProjetModal from '../components/ui/ProjetModal';
+import { projets } from '../data/projets';
 import { fadeInLeft, fadeInRight, fadeInUp, viewportConfig } from '../utils/animations';
+import type { Projet } from '../types';
 
 const iconMap: Record<string, FC<{ size?: number; className?: string; style?: React.CSSProperties }>> = {
   BarChart3, Megaphone, Building2, Lightbulb,
@@ -111,6 +114,13 @@ const timelineData = [
 ];
 
 const TimelineSection: FC = () => {
+  const [selected, setSelected] = useState<Projet | null>(null);
+
+  const handleCardClick = (id: string) => {
+    const projet = projets.find(p => p.id === id);
+    if (projet) setSelected(projet);
+  };
+
   return (
     <section id="timeline" className="py-24 bg-dark-700 relative overflow-hidden">
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-px h-full bg-gradient-to-b from-transparent via-white/6 to-transparent pointer-events-none hidden lg:block" />
@@ -125,7 +135,6 @@ const TimelineSection: FC = () => {
           />
         </div>
 
-        {/* Timeline */}
         <div className="relative space-y-16">
           {timelineData.map((annee, anneeIndex) => (
             <div key={annee.annee} className="relative">
@@ -157,13 +166,16 @@ const TimelineSection: FC = () => {
                   const isLeft = (anneeIndex + projetIndex) % 2 === 0;
 
                   return (
-                    <motion.div
+                    <motion.button
                       key={projet.id}
                       variants={isLeft ? fadeInLeft : fadeInRight}
                       initial="hidden"
                       whileInView="visible"
                       viewport={viewportConfig}
-                      className={`glass-card rounded-2xl p-5 border ${annee.border} hover:bg-white/7 transition-all duration-300 group gradient-border`}
+                      onClick={() => handleCardClick(projet.id)}
+                      className={`glass-card rounded-2xl p-5 border ${annee.border} hover:bg-white/7 transition-all duration-300 group gradient-border text-left w-full cursor-pointer`}
+                      whileHover={{ y: -2 }}
+                      whileTap={{ scale: 0.98 }}
                     >
                       {/* Icon + titre */}
                       <div className="flex items-start gap-3 mb-3">
@@ -173,26 +185,30 @@ const TimelineSection: FC = () => {
                         >
                           <Icon size={18} style={{ color: annee.couleur }} />
                         </div>
-                        <div>
+                        <div className="flex-1 min-w-0">
                           <h4 className="text-white font-semibold text-sm leading-tight">{projet.titre}</h4>
                           <p className="text-zinc-500 text-xs mt-0.5">{projet.sousTitre}</p>
+                        </div>
+                        {/* Indicateur cliquable */}
+                        <div
+                          className="w-6 h-6 rounded-full border border-white/10 flex items-center justify-center shrink-0 opacity-0 group-hover:opacity-100 transition-all duration-200"
+                          style={{ borderColor: `${annee.couleur}40`, background: `${annee.couleur}10` }}
+                        >
+                          <ArrowUpRight size={11} style={{ color: annee.couleur }} />
                         </div>
                       </div>
 
                       <p className="text-zinc-400 text-xs leading-relaxed mb-3">{projet.description}</p>
 
-                      {/* Footer */}
                       <div className="flex items-center justify-between">
                         <Badge variant={annee.badgeVariant} size="sm">{projet.periode}</Badge>
                         <div className="flex gap-1">
                           {projet.competences.slice(0, 2).map((c) => (
-                            <span key={c} className="text-xs text-zinc-600">
-                              {c}
-                            </span>
+                            <span key={c} className="text-xs text-zinc-600">{c}</span>
                           ))}
                         </div>
                       </div>
-                    </motion.div>
+                    </motion.button>
                   );
                 })}
               </div>
@@ -200,6 +216,10 @@ const TimelineSection: FC = () => {
           ))}
         </div>
       </div>
+
+      <AnimatePresence>
+        {selected && <ProjetModal projet={selected} onClose={() => setSelected(null)} />}
+      </AnimatePresence>
     </section>
   );
 };
